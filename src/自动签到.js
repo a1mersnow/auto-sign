@@ -607,11 +607,14 @@
     findAndClickIt(text('签到'));
     next();
   }).add('点击签到领积分', (next) => {
-    let t = className('android.view.View').text('签到领积分').findOne(MAX);
-    if (!t) throw new Error('A');
-    let p = t.parent();
-    if (!p) throw new Error('A');
-    clickControl(p);
+    let t1 = className('android.view.View').text('签到领积分').findOne(MAX);
+    let t2 = className('android.widget.Button').text('今日已签到').findOne(MAX);
+    if (!t1 && !t2) throw new Error('A');
+    if (t1) {
+      let p = t1.parent();
+      if (!p) throw new Error('B');
+      clickControl(p);
+    }
     next();
   });
 
