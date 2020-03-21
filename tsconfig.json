@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "allowJs": true,
+    "checkJs": true,
+    "noImplicitThis": true,
+    "outDir": "./dist",
+    "noEmit": true,
+    "lib": ["ES6"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "preserve"
+  },
+  "include": ["./src", "./types"],
+}
