@@ -601,10 +601,10 @@
     ));
     next();
   }).add('点击积分', (next) => {
-    findAndClickIt(text('积分'));
+    findAndClickIt(idEndsWith('score_view'));
     next();
   }).add('点击签到', (next) => {
-    findAndClickIt(text('签到'));
+    findAndClickIt(idEndsWith('function0').text('签到'));
     next();
   }).add('点击签到领积分', (next) => {
     let t1 = className('android.view.View').text('签到领积分').findOne(MAX);
