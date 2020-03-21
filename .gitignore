@@ -1,3 +1,4 @@
 node_modules/
-自动签到（不含支付宝）.js
+src/
+!src/自动签到.js
 .DS_Store
