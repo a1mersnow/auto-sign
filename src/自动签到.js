@@ -636,7 +636,7 @@
   } catch (e) {
     console.error(e.message);
   }
-  console.show();
+  engines.stopAll(); // to stop all listers
 
   /**
    *
