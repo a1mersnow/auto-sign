@@ -602,9 +602,10 @@
     next();
   }).add('点击积分', (next) => {
     findAndClickIt(idEndsWith('score_view'));
+    sleep(1000);
     next();
   }).add('点击签到', (next) => {
-    findAndClickIt(idEndsWith('function0').text('签到'));
+    findAndClickIt(idEndsWith('function0'));
     next();
   }).add('点击签到领积分', (next) => {
     let t1 = className('android.view.View').text('签到领积分').findOne(MAX);
