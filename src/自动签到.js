@@ -345,7 +345,7 @@
         task = getNextTask();
         continue;
       }
-      if (/阅读|指南|活动|好物推荐/.test(title)) {
+      if (/阅读|指南|活动|好物推荐|干货推荐|攻略/.test(title)) {
         sleep(2000);
         backward();
         sleep(2000);
@@ -379,7 +379,7 @@
         if (titleEl == null || btnEl == null) continue;
         let title = titleEl.text();
         let btnText = btnEl.text();
-        if (btnText !== '已完成' && /活动|阅读|指南|分享|好物推荐/.test(title)) {
+        if (btnText !== '已完成' && /活动|阅读|指南|分享|好物推荐|干货推荐|攻略/.test(title)) {
           return task;
         }
       }
