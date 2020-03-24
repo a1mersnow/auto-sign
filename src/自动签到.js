@@ -78,9 +78,10 @@
    * @param {string} appName
    * @param {string} packageName
    * @param {(() => boolean) | string} homePageCondition
+   * @param {(() => boolean) | void} quitCondition
    * @returns {Application}
    */
-  function createApp(appName, packageName, homePageCondition) {
+  function createApp(appName, packageName, homePageCondition, quitCondition) {
     /** @type {[string, Function][]} */
     let steps = [];
     let index = 0;
@@ -90,7 +91,7 @@
     function init() {
       try {
         log('【' + appName + '】初始化...')
-        launchPackage(packageName, homePageCondition);
+        launchPackage(packageName, homePageCondition, quitCondition);
         backToHome(homePageCondition);
         log('【' + appName + '】初始化成功');
         return true;
@@ -311,6 +312,12 @@
     }
     next();
   }).add('我的任务', (next) => {
+    /**
+     * 记录任务重试次数
+     * @type {{[index: string]: number}}
+     */
+    let count = {};
+
     findAndClickIt(text('我的任务'));
     sleep(500);
     let daily = text('日常任务').findOne(MAX);
@@ -345,15 +352,16 @@
         task = getNextTask();
         continue;
       }
-      if (/阅读|指南|活动|好物推荐|干货推荐|攻略/.test(title)) {
-        sleep(2000);
-        backward();
-        sleep(2000);
-      } else if (/分享/.test(title)) {
+      if (/分享/.test(title)) {
         sleep(3000);
         findAndClickIt(text('分享'));
         findAndClickIt(idEndsWith('tv_wechat'));
+        sleep(2000);
         backward();
+        backward();
+        sleep(2000);
+      } else {
+        sleep(3000);
         backward();
         sleep(2000);
       }
@@ -379,7 +387,8 @@
         if (titleEl == null || btnEl == null) continue;
         let title = titleEl.text();
         let btnText = btnEl.text();
-        if (btnText !== '已完成' && /活动|阅读|指南|分享|好物推荐|干货推荐|攻略/.test(title)) {
+        if (btnText !== '已完成' && !/幸运屋|关注推荐/.test(title) && ((count[title] || 0) < 4)) {
+          count[title] = (count[title] || 0) + 1;
           return task;
         }
       }
@@ -471,7 +480,7 @@
     next();
   });
 
-  let zsZfb = createApp('招行支付宝', 'com.eg.android.AlipayGphone', 'com.eg.android.AlipayGphone.AlipayLogin');
+  let zsZfb = createApp('招行支付宝', 'com.eg.android.AlipayGphone', 'com.eg.android.AlipayGphone.AlipayLogin', () => idEndsWith('registerAccount').text('注册账号').exists());
   zsZfb.add('点击朋友', (next) => {
     findAndClickIt(text('朋友'));
     next();
@@ -761,14 +770,16 @@
   /**
    * @param {String} packageName
    * @param {string | (() => boolean)} condition
+   * @param {(() => boolean) | void} quitCondition
    */
-  function launchPackage (packageName, condition) {
+  function launchPackage (packageName, condition, quitCondition) {
     let resolvedCondition;
     if (typeof condition === 'string') {
       resolvedCondition = () => currentActivity() === condition;
     } else {
       resolvedCondition = condition;
     }
+    let resolvedQuitCondition = quitCondition || (() => false)
     sleep(1000);
     let b = app.launchPackage(packageName);
     if (!b) throw new Error('app启动失败');
@@ -779,9 +790,12 @@
       sleep(2000);
     }
     let index = 5;
-    while (!resolvedCondition() && index > 0) {
+    while (!resolvedQuitCondition() && !resolvedCondition() && index > 0) {
       sleep(1000);
       index--;
+    }
+    if (resolvedQuitCondition()) {
+      throw new Error('该app未登录或不满足继续下去的条件');
     }
     // 点击中心，消除可能的弹窗
     click(device.width / 2, device.height / 2);
