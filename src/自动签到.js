@@ -783,6 +783,12 @@
     sleep(1000);
     let b = app.launchPackage(packageName);
     if (!b) throw new Error('app启动失败');
+    // app双开处理
+    let resolver = id('android:id/resolver_list').findOne(1000);
+    if (resolver) {
+      let apps = resolver.find(className('android.widget.LinearLayout').clickable());
+      clickControl(apps[0]);
+    }
     // app更新可能重新进入引导页
     let leap = text('跳过').findOnce();
     if (leap) {
