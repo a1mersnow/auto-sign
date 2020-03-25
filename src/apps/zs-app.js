@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('./util');
-let {createApp} = require('./app');
+let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('../util');
+let {createApp} = require('../app');
 
 let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () => {
   return text('饭票').exists && text('影票').exists() && text('积分').exists();

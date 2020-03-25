@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('./util');
-let {createApp} = require('./app');
+let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('../util');
+let {createApp} = require('../app');
 
 let app = createApp('京东购物', 'com.jingdong.app.mall', 'com.jingdong.app.mall.MainFrameActivity');
 app.add('点击我的', (next) => {

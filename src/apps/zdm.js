@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('./util');
-let {createApp} = require('./app');
+let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('../util');
+let {createApp} = require('../app');
 
 let app = createApp('张大妈', 'com.smzdm.client.android', 'com.smzdm.client.android.app.HomeActivity');
 app.add('点击我的', (next) => {

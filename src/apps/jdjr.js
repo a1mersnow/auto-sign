@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX} = require('./util');
-let {createApp} = require('./app');
+let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX} = require('../util');
+let {createApp} = require('../app');
 
 let app = createApp('京东金融', 'com.jd.jrapp', 'com.jd.jrapp.bm.mainbox.main.MainActivity');
 app.add('点击我的', (next) => {

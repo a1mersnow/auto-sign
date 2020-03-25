@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX} = require('./util');
-let {createApp} = require('./app');
+let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX} = require('../util');
+let {createApp} = require('../app');
 
 let app = createApp('一加社区', 'com.oneplus.bbs', 'com.oneplus.bbs.ui.activity.CommunityActivity');
 app.add('点击今日签到', (next) => {

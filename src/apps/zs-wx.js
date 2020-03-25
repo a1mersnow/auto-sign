@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('./util');
-let {createApp} = require('./app');
+let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('../util');
+let {createApp} = require('../app');
 
 let app = createApp('招行微信', 'com.tencent.mm', () => {
   return text('微信').exists() && text('通讯录').exists();

@@ -56,14 +56,14 @@ if (!storages.create('password').get('password')) {
 }
 
 try {
-  let oneplus = require('./oneplus');
-  let jdjr = require('./jdjr');
-  let jdmall = require('./jdmall');
-  let zdm = require('./zdm');
-  let zsWx = require('./zs-wx');
-  let zsZfb = require('./zs-zfb');
-  let zsApp = require('./zs-app');
-  let zsApp2 = require('./zs-app2');
+  let oneplus = require('./apps/oneplus');
+  let jdjr = require('./apps/jdjr');
+  let jdmall = require('./apps/jdmall');
+  let zdm = require('./apps/zdm');
+  let zsWx = require('./apps/zs-wx');
+  let zsZfb = require('./apps/zs-zfb');
+  let zsApp = require('./apps/zs-app');
+  let zsApp2 = require('./apps/zs-app2');
 
   let {setFirstRound, failedTasks} = require('./app');
 
