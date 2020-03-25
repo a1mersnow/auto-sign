@@ -356,8 +356,14 @@
         sleep(3000);
         findAndClickIt(text('分享'));
         findAndClickIt(idEndsWith('tv_wechat'));
-        sleep(2000);
-        backward();
+        let yes = className('android.widget.Button').text('是').findOnce();
+        if (yes) {
+          clickControl(yes);
+          sleep(1000);
+        } else {
+          sleep(2000);
+          backward();
+        }
         backward();
         sleep(2000);
       } else {
