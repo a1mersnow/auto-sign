@@ -1,4 +1,4 @@
 node_modules/
-src/
-!src/自动签到.js
+dist/
 .DS_Store
+paths/
