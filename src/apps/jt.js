@@ -1,30 +1,26 @@
 let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('../util');
 let {createApp} = require('../app');
 
-let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () => {
-  return text('饭票').exists && text('影票').exists() && text('积分').exists();
-});
+let app = createApp('买单吧', 'com.bankcomm.maidanba', 'com.bankcomm.maidanba.activity.MainActivity');
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'));
+  let closeAd = idEndsWith('idADClose').findOnce();
+  if (closeAd) {
+    clickControl(closeAd);
+  }
   next();
-}).add('点击签到按钮', (next) => {
-  let t = text('资料管理').findOne(MAX);
-  if (t == null) throw new Error();
-  let c = t.parent();
-  if (c == null) throw new Error();
-  let x = sibling(c, 2);
-  if (x == null) throw new Error();
-  clickControl(x);
+}).add('点击每日签到按钮', (next) => {
+  findAndClickIt(idEndsWith('tv_sign'));
   sleep(1000);
   next();
 }).add('判断登陆状态', (next) => {
-  if (text('每日签到').exists()) {
+  if (idEndsWith('bt_signin').exists()) {
     next('点击签到按钮');
   } else {
     next();
   }
 }).add('判断有没有指纹', (next) => {
-  if (text('忘记手势密码').exists()) {
+  if (!idEndsWith('fpt_dialog_hint_text').exists()) {
     next('输入图案密码');
   } else {
     next();
@@ -32,35 +28,26 @@ app.add('点击我的', (next) => {
 }).add('点击取消和切换登陆方式', (next) => {
   findAndClickIt(text('取消'));
   findAndClickIt(text('切换登录方式'));
+  findAndClickIt(text('手势登录'));
+  sleep(500);
   next();
 }).add('输入图案密码', (next) => {
   let password = storages.create('password').get('password');
   if (!password) throw new Error('未曾输入过密码');
-  let welcom = className('android.widget.TextView').text('欢迎回来').findOne(MAX);
-  if (welcom == null) throw new Error('A');
-  let p = welcom.parent();
-  if (p == null) throw new Error('B');
-  let c = sibling(p, 4);
-  if (c == null) throw new Error('C');
-  let t = c.child(0);
-  if (t == null) throw new Error('D');
-  inputPassword(t, password);
+  let c = idEndsWith('login_gestureLockView_rl').findOne(MAX);
+  if (c == null) throw new Error('密码包含块未找到');
+  inputPassword(c, password);
   next();
 }).add('点击签到按钮', (next) => {
-  let t = className('android.view.View').text('活动规则').findOne(MAX);
-  if (t == null) throw new Error('活动规则控件未找到');
-  let signBtn = sibling(t, 1);
-  if (signBtn == null) throw new Error('签到按钮未找到');
-  clickControl(signBtn, true);
-  backward();
+  let signBtn = idEndsWith('bt_signin').findOne(MAX);
+  if (signBtn == null) throw new Error();
+  clickControl(signBtn);
+  sleep(1500);
   next();
-}).add('输出积分', (next) => {
-  let t = text('积分').findOne(MAX);
-  if (t == null) throw new Error('积分二字未找到');
-  let score = sibling(t, 0);
-  if (score == null) throw new Error('积分数字未找到');
-  sleep(1000);
-  console.info('招行积分：' + score.text());
+}).add('签到成功', (next) => {
+  let b = idEndsWith('btn_negative').findOnce();
+  if (b) clickControl(b);
+  console.info('交行签到成功');
   next();
 });
 

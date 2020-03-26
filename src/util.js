@@ -130,6 +130,23 @@ function log(x) {
   console.verbose(x)
 }
 
+/**
+ *
+ * @param {UiCollection} points
+ * @param {string} password
+ */
+function inputPasswordByGestrueOfCon (points, password) {
+  // @ts-ignore
+  gesture.apply(null, [password.length * 500].concat(
+    // @ts-ignore
+    password.split('').map((number) => {
+      let el = points[+number - 1];
+      let bs = el.bounds();
+      return [bs.centerX(), bs.centerY()];
+    })
+  ));
+}
+
 module.exports = {
   MAX,
   getNumberFromSelector,
@@ -139,5 +156,6 @@ module.exports = {
   backward,
   log,
   sibling,
-  clickControl
+  clickControl,
+  inputPasswordByGestrueOfCon
 }

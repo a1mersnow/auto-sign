@@ -3,10 +3,15 @@ const dayjs = require('dayjs')
 
 module.exports = {
   mode: 'production',
-  entry: './src/main.js',
+  entry: {
+    main: './src/main.js',
+    test: './src/test.js'
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: '自动签到' + getTime() + '.js'
+    filename: (chunkData) => {
+      return chunkData.chunk.name === 'main' ? ('自动签到' + getTime() + '.js') : 'test.js';
+    }
   }
 };
 

@@ -21,6 +21,7 @@ app.add('点击我的', (next) => {
   let b = className('android.widget.TextView').text('手势登录').findOne(MAX);
   if (b == null) throw new Error('未找到手势登录方式');
   clickControl(b);
+  next();
 }).add('滑动输入密码', (next) => {
   // 点击同意政策
   let circle = className('android.widget.CheckBox').findOne(1500);
