@@ -74,7 +74,8 @@ function launchPackage (packageName, condition, quitCondition) {
  * @param {number=} maxStep
  * @param {number=} step
  */
-function backToHome(condition, maxStep = 12, step) {
+function backToHome(condition, maxStep, step) {
+  if (maxStep == null) maxStep = 12;
   sleep(500);
   /** @type {() => boolean} */
   let resolvedCondition;
