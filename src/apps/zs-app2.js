@@ -13,15 +13,19 @@ app.add('点击我的', (next) => {
     next();
   }
 }).add('判断登录方式', (next) => {
-  let t = className('android.widget.TextView').text('点击进行指纹解锁').findOne(MAX);
-  if (t == null) return next();
-  let m = className('android.widget.TextView').text('更多').findOne(MAX);
-  if (m == null) throw new Error('没有找到更多');
-  clickControl(m);
-  let b = className('android.widget.TextView').text('手势登录').findOne(MAX);
-  if (b == null) throw new Error('未找到手势登录方式');
-  clickControl(b);
-  next();
+  if (idEndsWith('vGestureContentView').exists()) {
+    next();
+  } else {
+    let t = className('android.widget.TextView').text('点击进行指纹解锁').findOne(MAX);
+    if (t == null) return next();
+    let m = className('android.widget.TextView').text('更多').findOne(MAX);
+    if (m == null) throw new Error('没有找到更多');
+    clickControl(m);
+    let b = className('android.widget.TextView').text('手势登录').findOne(MAX);
+    if (b == null) throw new Error('未找到手势登录方式');
+    clickControl(b);
+    next();
+  }
 }).add('滑动输入密码', (next) => {
   // 点击同意政策
   let circle = className('android.widget.CheckBox').findOne(1500);
