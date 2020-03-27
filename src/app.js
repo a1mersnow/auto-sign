@@ -1,4 +1,4 @@
-let {launchPackage, backToHome} = require('./util');
+import {launchPackage, backToHome} from './util';
 
 /**
  * @typedef Application
@@ -135,7 +135,7 @@ function setFirstRound(flag) {
   firstRoundFlag = flag;
 }
 
-module.exports = {
+export {
   createApp,
   isFirstRound,
   setFirstRound,

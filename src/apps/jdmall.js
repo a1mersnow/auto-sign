@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('../util');
-let {createApp} = require('../app');
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {createApp} from '../app';
 
 let app = createApp('京东购物', 'com.jingdong.app.mall', 'com.jingdong.app.mall.MainFrameActivity');
 app.add('点击我的', (next) => {
@@ -66,4 +66,4 @@ app.add('点击我的', (next) => {
   next();
 });
 
-module.exports = app;
+export default app;

@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('../util');
-let {createApp} = require('../app');
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {createApp} from '../app';
 
 let app = createApp('买单吧', 'com.bankcomm.maidanba', 'com.bankcomm.maidanba.activity.MainActivity');
 app.add('点击我的', (next) => {
@@ -83,4 +83,4 @@ function getPoint(rect, number) {
   ]
 }
 
-module.exports = app;
+export default app;

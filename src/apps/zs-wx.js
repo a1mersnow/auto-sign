@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('../util');
-let {createApp} = require('../app');
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {createApp} from '../app';
 
 let app = createApp('招行微信', 'com.tencent.mm', () => {
   return text('微信').exists() && text('通讯录').exists();
@@ -36,4 +36,4 @@ app.add('点击通讯录', (next) => {
   next();
 });
 
-module.exports = app;
+export default app;

@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, inputPasswordByGestrueOfCon, backward, getNumberFromSelector, MAX, sibling} = require('../util');
-let {createApp} = require('../app');
+import {findAndClickIt, clickControl, inputPasswordByGestrueOfCon, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {createApp} from '../app';
 
 let app = createApp('发现精彩', 'com.cs_credit_bank', 'com.mapass.example.activity.MainActivity_');
 app.add('点击我的', (next) => {
@@ -43,4 +43,4 @@ app.add('点击我的', (next) => {
   next();
 });
 
-module.exports = app;
+export default app;

@@ -1,15 +1,26 @@
-let init = require('./init.js')
+import init from './init.js';
+import oneplus from './apps/oneplus';
+import jdjr from './apps/jdjr';
+import jdmall from './apps/jdmall';
+import zdm from './apps/zdm';
+import zsWx from './apps/zs-wx';
+import zsZfb from './apps/zs-zfb';
+import zsApp2 from './apps/zs-app2';
+import zsApp from './apps/zs-app';
+import gf from './apps/gf';
+import jt from './apps/jt';
+
 init(
   [
-    require('./apps/oneplus'),
-    require('./apps/jdjr'),
-    require('./apps/jdmall'),
-    require('./apps/zdm'),
-    require('./apps/zs-wx'),
-    require('./apps/zs-zfb'),
-    require('./apps/zs-app2'),
-    require('./apps/zs-app'),
-    require('./apps/gf'),
-    require('./apps/jt'),
+    oneplus,
+    jdjr,
+    jdmall,
+    zdm,
+    zsWx,
+    zsZfb,
+    zsApp2,
+    zsApp,
+    gf,
+    jt,
   ]
 );

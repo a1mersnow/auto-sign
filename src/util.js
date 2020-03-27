@@ -1,6 +1,5 @@
 // 最大搜索时间
 const MAX = 3000;
-exports.MAX = MAX;
 
 /**
  *
@@ -148,7 +147,7 @@ function inputPasswordByGestrueOfCon (points, password) {
   ));
 }
 
-module.exports = {
+export {
   MAX,
   getNumberFromSelector,
   findAndClickIt,

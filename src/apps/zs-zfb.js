@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} = require('../util');
-let {createApp} = require('../app');
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {createApp} from '../app';
 
 let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', 'com.eg.android.AlipayGphone.AlipayLogin', () => idEndsWith('registerAccount').text('注册账号').exists());
 app.add('点击朋友', (next) => {
@@ -32,4 +32,4 @@ app.add('点击朋友', (next) => {
   next();
 });
 
-module.exports = app;
+export default app;

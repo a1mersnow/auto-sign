@@ -1,5 +1,5 @@
-let {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX} = require('../util');
-let {createApp} = require('../app');
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX} from '../util';
+import {createApp} from '../app';
 
 let app = createApp('一加社区', 'com.oneplus.bbs', 'com.oneplus.bbs.ui.activity.CommunityActivity');
 app.add('点击今日签到', (next) => {
@@ -36,4 +36,4 @@ app.add('点击今日签到', (next) => {
   console.info('一加社区签到成功, 当前加油：' + getNumberFromSelector(idEndsWith('tv_my_jia_you')));
   next();
 });
-module.exports = app;
+export default app;

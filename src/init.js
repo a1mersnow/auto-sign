@@ -1,3 +1,5 @@
+import {setFirstRound, failedTasks} from './app';
+
 /**
  *
  * @param {import('./app').Application[]} apps
@@ -35,7 +37,6 @@ function main(apps) {
   }
 
   try {
-    let {setFirstRound, failedTasks} = require('./app');
 
     setFirstRound(true);
     createChain(apps).run();
@@ -72,4 +73,4 @@ function createChain(arr) {
   return arr[0];
 }
 
-module.exports = main;
+export default main;
