@@ -74,7 +74,7 @@ function launchPackage (packageName, condition, quitCondition) {
  * @param {number=} maxStep
  * @param {number=} step
  */
-function backToHome(condition, maxStep, step) {
+function backToHome(condition, maxStep = 12, step) {
   sleep(500);
   /** @type {() => boolean} */
   let resolvedCondition;
@@ -84,7 +84,7 @@ function backToHome(condition, maxStep, step) {
     resolvedCondition = condition;
   }
   if (resolvedCondition()) return;
-  if (maxStep != null && step === maxStep) return;
+  if (step === maxStep) return;
   if (step == null) step = 0
   backward();
   backToHome(resolvedCondition, maxStep, step + 1);
