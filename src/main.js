@@ -7,8 +7,8 @@ init(
     require('./apps/zdm'),
     require('./apps/zs-wx'),
     require('./apps/zs-zfb'),
-    require('./apps/zs-app'),
     require('./apps/zs-app2'),
+    require('./apps/zs-app'),
     require('./apps/gf'),
     require('./apps/jt'),
   ]
