@@ -99,7 +99,7 @@ app.add('点击我的', (next) => {
       if (titleEl == null || btnEl == null) continue;
       let title = titleEl.text();
       let btnText = btnEl.text();
-      if (btnText !== '已完成' && !/幸运屋|关注推荐/.test(title) && ((count[title] || 0) < 4)) {
+      if (btnText !== '已完成' && !/幸运屋|关注推荐|栏目关注/.test(title) && ((count[title] || 0) < 4)) {
         count[title] = (count[title] || 0) + 1;
         return task;
       }
