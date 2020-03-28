@@ -5,8 +5,12 @@ let app = createApp('买单吧', 'com.bankcomm.maidanba', 'com.bankcomm.maidanba
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'));
   let closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
-  if (closeAd) {
+  let index = 0
+  while (closeAd && index < 3) {
     clickControl(closeAd);
+    index++;
+    sleep(1000);
+    closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
   }
   next();
 }).add('点击每日签到按钮', (next) => {
