@@ -4,7 +4,7 @@ import {createApp} from '../app';
 let app = createApp('买单吧', 'com.bankcomm.maidanba', 'com.bankcomm.maidanba.activity.MainActivity');
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'));
-  let closeAd = idEndsWith('idADClose').findOnce();
+  let closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
   if (closeAd) {
     clickControl(closeAd);
   }
