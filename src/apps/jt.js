@@ -10,7 +10,7 @@ app.add('点击我的', (next) => {
   }
   next();
 }).add('点击每日签到按钮', (next) => {
-  findAndClickIt(idEndsWith('tv_sign'));
+  findAndClickIt(idEndsWith('tv_sign').text('每日签到'));
   sleep(1000);
   next();
 }).add('判断登陆状态', (next) => {
