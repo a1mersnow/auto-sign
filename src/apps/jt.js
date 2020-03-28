@@ -1,7 +1,7 @@
 import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
 import {createApp} from '../app';
 
-let app = createApp('买单吧', 'com.bankcomm.maidanba', 'com.bankcomm.maidanba.activity.MainActivity');
+let app = createApp('买单吧', 'com.bankcomm.maidanba', () => text('首页').exists() && text('我的').exists());
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'));
   let closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
