@@ -4,6 +4,14 @@ import {createApp} from '../app';
 let app = createApp('发现精彩', 'com.cs_credit_bank', 'com.mapass.example.activity.MainActivity_');
 app.add('点击我的', (next) => {
   findAndClickIt(idEndsWith('ll_me'));
+  let closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
+  let index = 0
+  while (closeAd && index < 3) {
+    clickControl(closeAd);
+    index++;
+    sleep(1000);
+    closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
+  }
   next();
 }).add('点击签到', (next) => {
   findAndClickIt(idEndsWith('sign_tip'));
