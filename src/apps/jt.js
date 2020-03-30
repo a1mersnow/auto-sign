@@ -47,10 +47,18 @@ app.add('点击我的', (next) => {
   if (signBtn == null) throw new Error();
   clickControl(signBtn);
   sleep(1500);
-  next();
-}).add('签到成功', (next) => {
+  // 点击取消？
   let b = idEndsWith('btn_negative').findOnce();
   if (b) clickControl(b);
+  next();
+}).add('点击抽奖按钮', (next, {backHome}) => {
+  backHome();
+  sleep(1000);
+  findAndClickIt(idEndsWith('tv_sign').text('每日签到'));
+  sleep(1000);
+  findAndClickIt(className('android.widget.Button').text('抽奖'));
+  next();
+}).add('签到成功', (next) => {
   console.info('交行签到成功');
   next();
 });
