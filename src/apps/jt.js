@@ -57,6 +57,8 @@ app.add('点击我的', (next) => {
   findAndClickIt(idEndsWith('tv_sign').text('每日签到'));
   sleep(1000);
   findAndClickIt(className('android.widget.Button').text('抽奖'));
+  sleep(1000);
+  findAndClickIt(className('android.widget.Button').text('完成'));
   next();
 }).add('签到成功', (next) => {
   console.info('交行签到成功');
