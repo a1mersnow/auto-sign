@@ -1,17 +1,10 @@
-import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling, clickClose} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('买单吧', 'com.bankcomm.maidanba', () => text('首页').exists() && text('我的').exists());
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'));
-  let closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
-  let index = 0
-  while (closeAd && index < 3) {
-    clickControl(closeAd);
-    index++;
-    sleep(1000);
-    closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
-  }
+  clickClose();
   next();
 }).add('点击每日签到按钮', (next) => {
   findAndClickIt(idEndsWith('tv_sign').text('每日签到'));
@@ -51,13 +44,12 @@ app.add('点击我的', (next) => {
   let b = idEndsWith('btn_negative').findOnce();
   if (b) clickControl(b);
   next();
-}).add('点击抽奖按钮', (next, {backHome}) => {
-  backHome();
-  sleep(1000);
-  findAndClickIt(idEndsWith('tv_sign').text('每日签到'));
-  sleep(1000);
-  findAndClickIt(className('android.widget.Button').text('抽奖'));
-  sleep(1000);
+}).add('点击抽奖按钮', (next) => {
+  let t = className('android.widget.Button').text('去抽奖').findOnce();
+  if (t) {
+    clickControl(t);
+    sleep(1000);
+  }
   findAndClickIt(className('android.widget.Button').text('完成'));
   next();
 }).add('签到成功', (next) => {

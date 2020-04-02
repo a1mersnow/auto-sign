@@ -147,7 +147,19 @@ function inputPasswordByGestrueOfCon (points, password) {
   ));
 }
 
+function clickClose() {
+  let closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
+  let index = 0
+  while (closeAd && index < 3) {
+    clickControl(closeAd);
+    index++;
+    sleep(1000);
+    closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
+  }
+}
+
 export {
+  clickClose,
   MAX,
   getNumberFromSelector,
   findAndClickIt,
