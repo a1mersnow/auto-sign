@@ -119,7 +119,8 @@ app.add('点击我的', (next) => {
       break;
     }
   }
-  backward();
+  // backward();
+  findAndClickIt(desc('Navigate up'));
   next();
 
   function getNextBag() {
