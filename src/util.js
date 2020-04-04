@@ -26,8 +26,9 @@ function findAndClickIt(selector) {
  * @param {String} packageName
  * @param {string | (() => boolean)} condition
  * @param {(() => boolean) | void} quitCondition
+ * @param {boolean} clickCenter
  */
-function launchPackage (packageName, condition, quitCondition) {
+function launchPackage (packageName, condition, quitCondition, clickCenter) {
   let resolvedCondition;
   if (typeof condition === 'string') {
     resolvedCondition = () => currentActivity() === condition;
@@ -59,10 +60,12 @@ function launchPackage (packageName, condition, quitCondition) {
     throw new Error('该app未登录或不满足继续下去的条件');
   }
   // 点击中心，消除可能的弹窗
-  click(device.width / 2, device.height / 2);
-  sleep(1000);
-  while (!resolvedCondition()) {
-    backward();
+  if (clickCenter) {
+    click(device.width / 2, device.height / 2);
+    sleep(1000);
+    while (!resolvedCondition()) {
+      backward();
+    }
   }
 }
 

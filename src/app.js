@@ -18,9 +18,11 @@ let firstRoundFlag = false
  * @param {string} packageName
  * @param {(() => boolean) | string} homePageCondition
  * @param {(() => boolean) | void} quitCondition
+ * @param {boolean | void} clickCenter
  * @returns {Application}
  */
-function createApp(appName, packageName, homePageCondition, quitCondition) {
+function createApp(appName, packageName, homePageCondition, quitCondition, clickCenter) {
+  if (typeof clickCenter === 'undefined') clickCenter = true;
   /** @type {[string, Function][]} */
   let steps = [];
   let index = 0;
@@ -30,7 +32,7 @@ function createApp(appName, packageName, homePageCondition, quitCondition) {
   function init() {
     try {
       log('【' + appName + '】初始化...')
-      launchPackage(packageName, homePageCondition, quitCondition);
+      launchPackage(packageName, homePageCondition, quitCondition, /** @type {boolean} */(clickCenter));
       backToHome(homePageCondition);
       log('【' + appName + '】初始化成功');
       return true;

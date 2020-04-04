@@ -1,7 +1,7 @@
 import {findAndClickIt, clickControl, inputPasswordByGestrueOfCon, backward, getNumberFromSelector, MAX, sibling} from '../util';
 import {createApp} from '../app';
 
-let app = createApp('发现精彩', 'com.cs_credit_bank', 'com.mapass.example.activity.MainActivity_');
+let app = createApp('发现精彩', 'com.cs_credit_bank', 'com.mapass.example.activity.MainActivity_', undefined, false);
 app.add('点击我的', (next) => {
   findAndClickIt(idEndsWith('ll_me'));
   let closeAd = idMatches(/.*[Cc]lose.*/).findOnce();
