@@ -9,7 +9,7 @@ app.add('点击我的', (next) => {
   findAndClickIt(text('每日签到'));
   next();
 }).add('点击签到按钮', (next) => {
-  findAndClickIt(textMatches(/^(已连续签到\d+天|签到领钢镚.*)$/));
+  findAndClickIt(textMatches(/^(.*已连续签到\d+天.*|.*签到领钢镚.*)$/));
   next();
 });
 
