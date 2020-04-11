@@ -6,7 +6,9 @@ const MAX = 5000;
  * @param {UiSelector} selector
  */
 function getNumberFromSelector(selector) {
-  let remainsEl = selector.findOne(MAX);
+  let remainsEl = selector.findOne(MAX / 2);
+  sleep(100);
+  if (remainsEl == null) remainsEl = selector.findOne(MAX / 2);
   if (remainsEl == null) throw new Error();
   let match = remainsEl.text().match(/\d+/);
   if (!match) throw new Error();
@@ -17,7 +19,9 @@ function getNumberFromSelector(selector) {
  * @param {UiSelector} selector
  */
 function findAndClickIt(selector) {
-  let el = selector.findOne(MAX);
+  let el = selector.findOne(MAX / 2);
+  sleep(100);
+  if (el == null) el = selector.findOne(MAX / 2);
   if (el == null) throw new Error();
   clickControl(el);
 }
