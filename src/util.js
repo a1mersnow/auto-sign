@@ -67,7 +67,7 @@ function launchPackage (packageName, condition, quitCondition, clickCenter) {
   if (clickCenter) {
     click(device.width / 2, device.height / 2);
     sleep(1000);
-    while (!resolvedCondition()) {
+    if (!resolvedCondition()) {
       backward();
     }
   }
