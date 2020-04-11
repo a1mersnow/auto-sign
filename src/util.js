@@ -81,7 +81,8 @@ function launchPackage (packageName, condition, quitCondition, clickCenter) {
  * @param {number=} step
  */
 function backToHome(condition, maxStep, step) {
-  if (maxStep == null) maxStep = 12;
+  if (maxStep == null) maxStep = 8;
+  if (step == null) step = 0
   sleep(500);
   /** @type {() => boolean} */
   let resolvedCondition;
@@ -91,8 +92,7 @@ function backToHome(condition, maxStep, step) {
     resolvedCondition = condition;
   }
   if (resolvedCondition()) return;
-  if (step === maxStep) return;
-  if (step == null) step = 0
+  if (step >= maxStep) throw new Error('超过最大返回次数限制，`回到首页`操作未能完成');
   backward();
   backToHome(resolvedCondition, maxStep, step + 1);
 }
