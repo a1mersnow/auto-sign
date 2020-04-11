@@ -2,7 +2,7 @@ import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibl
 import {createApp} from '../app';
 
 let app = createApp('招行微信', 'com.tencent.mm', () => {
-  return text('微信').exists() && text('通讯录').exists();
+  return className('android.widget.TextView').text('微信').exists() && className('android.widget.TextView').text('通讯录').exists();
 });
 app.add('点击通讯录', (next) => {
   findAndClickIt(text('通讯录'));
