@@ -3,7 +3,10 @@ import {createApp} from '../app';
 
 let app = createApp('京东金融', 'com.jd.jrapp', 'com.jd.jrapp.bm.mainbox.main.MainActivity');
 app.add('点击我的', (next) => {
-  findAndClickIt(idEndsWith('firstLayout'));
+  let el = idEndsWith('iv_first_icon').findOne(MAX);
+  if (el == null) el = idEndsWith('firstLayout').findOne(MAX);
+  if (el == null) throw new Error();
+  clickControl(el);
   next();
 }).add('点击每日签到', (next) => {
   findAndClickIt(text('每日签到'));

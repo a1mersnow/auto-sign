@@ -9,9 +9,9 @@ function getNumberFromSelector(selector) {
   let remainsEl = selector.findOne(MAX / 2);
   sleep(100);
   if (remainsEl == null) remainsEl = selector.findOne(MAX / 2);
-  if (remainsEl == null) throw new Error();
+  if (remainsEl == null) throw new Error('Error from getNumberFromSelector: no el found');
   let match = remainsEl.text().match(/\d+/);
-  if (!match) throw new Error();
+  if (!match) throw new Error('Error from getNumberFromSelector: no number found');
   return +match[0];
 }
 

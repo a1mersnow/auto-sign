@@ -26,7 +26,7 @@ app.add('点击今日签到', (next) => {
     let go = idEndsWith('btn_draw_lottery').findOne(MAX);
     if (go == null) throw new Error();
     clickControl(go);
-    sleep(3500 + Math.random() * 1000);
+    sleep(4500 + Math.random() * 1000);
     backward();
     remains = getNumberFromSelector(idEndsWith('tv_remain_times'));
     oil = getNumberFromSelector(idEndsWith('tv_my_jia_you'));
