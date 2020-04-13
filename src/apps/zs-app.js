@@ -47,10 +47,12 @@ app.add('点击我的', (next) => {
   inputPassword(t, password);
   next();
 }).add('点击签到按钮', (next) => {
-  let t = className('android.view.View').text('活动规则').findOne(MAX);
+  let t = className('android.view.View').text('活动规则').findOne(MAX * 2);
   if (t == null) throw new Error('活动规则控件未找到');
   let signBtn = sibling(t, 1);
   if (signBtn == null) throw new Error('签到按钮未找到');
+  clickControl(signBtn, true);
+  sleep(300);
   clickControl(signBtn, true);
   backward();
   next();

@@ -18,7 +18,7 @@ app.add('点击我的', (next) => {
   sleep(1500);
   next();
 }).add('判断登录状态', (next) => {
-  let signBtn = className('android.view.View').text('签到').clickable().findOnce();
+  let signBtn = className('android.view.View').text('签到').findOne(MAX);
   if (signBtn) {
     clickControl(signBtn);
     next('clear');
@@ -44,7 +44,7 @@ app.add('点击我的', (next) => {
   inputPasswordByGestrueOfCon(points, password);
   next();
 }).add('点击签到', (next) => {
-  findAndClickIt(className('android.view.View').text('签到').clickable());
+  findAndClickIt(className('android.view.View').desc('签到'));
   next();
 }).add('签到成功', (next) => {
   console.info('广发签到成功');
