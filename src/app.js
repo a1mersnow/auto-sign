@@ -6,6 +6,7 @@ import {launchPackage, backToHome} from './util';
  * @property {Function} run
  * @property {Function} reset
  * @property {(x: Application | null) => void} after
+ * @property {() => string} getName
  */
 
 // 存储失败任务，等待重新运行，但是只重新运行一次
@@ -118,6 +119,9 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
     },
     reset() {
       index = 0;
+    },
+    getName () {
+      return appName
     }
   }
   return app
