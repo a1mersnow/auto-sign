@@ -50,7 +50,9 @@ app.add('点击我的', (next) => {
   ));
   next();
 }).add('点击积分', (next) => {
-  findAndClickIt(idEndsWith('score_view'));
+  let el = idEndsWith('score_view').findOne(MAX)
+  if (!el) throw new Error()
+  clickControl(el, true);
   sleep(1000);
   next();
 }).add('点击签到', (next) => {
