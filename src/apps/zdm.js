@@ -137,7 +137,17 @@ app.add('点击我的', (next) => {
     if (el) clickControl(el);
     sleep(1000);
     let go = idEndsWith('btn_go').findOnce();
-    if (go) clickControl(go);
+    if (go) {
+      clickControl(go);
+    } else {
+      let go2 = idEndsWith('bt_go').findOnce();
+      if (go2) {
+        clickControl(go2);
+      } else {
+        let go3 = textMatches(/.*知道了.*/).findOnce();
+        if (go3) clickControl(go3);
+      }
+    }
   }
   next();
 }).add('补签', (next) => {
