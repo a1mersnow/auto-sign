@@ -27,8 +27,17 @@ app.add('点击朋友', (next) => {
 }).add('点击积分·福利', (next) => {
   findAndClickIt(text('积分·福利'));
   next();
-}).add('点击打卡领积分', (next) => {
-  findAndClickIt(text('打卡领积分'));
+}).add('点击签到领积分', (next) => {
+  findAndClickIt(className('android.widget.TextView').textMatches(/.*签到领积分.*/));
+  next();
+}).add('确认授权', (next) => {
+  let el = className('android.widget.Button').text('确认授权').findOne(MAX);
+  if (el) {
+    clickControl(el);
+  }
+  next();
+}).add('点击签到按钮', (next) => {
+  findAndClickIt(text('签到按钮图片'));
   next();
 });
 
