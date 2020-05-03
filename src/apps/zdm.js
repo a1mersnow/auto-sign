@@ -61,7 +61,7 @@ app.add('点击我的', (next) => {
     if (/分享/.test(title)) {
       sleep(3000);
       findAndClickIt(text('分享'));
-      findAndClickIt(idEndsWith('tv_wechat'));
+      findAndClickIt(idEndsWith('tv_wx_session'));
       let yes = className('android.widget.Button').text('是').findOnce();
       if (yes) {
         clickControl(yes);
