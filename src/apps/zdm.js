@@ -74,7 +74,15 @@ app.add('点击我的', (next) => {
       sleep(2000);
     } else {
       sleep(3000);
-      backward();
+      let close = desc('Navigate up').findOnce()
+      let back = idEndsWith('iv_back').findOnce()
+      if (close) {
+        clickControl(close);
+      } else if (back) {
+        clickControl(back)
+      } else {
+        backward();
+      }
       sleep(2000);
     }
     task = getNextTask();
@@ -109,7 +117,7 @@ app.add('点击我的', (next) => {
   findAndClickIt(text('我的礼包'));
   let listItem = getNextBag();
   while (listItem) {
-    let no = listItem.findOne(text('未达成'));
+    let no = listItem.findOne(textEndsWith('未达成'));
     if (no == null) {
       clickControl(listItem);
       findAndClickIt(className('android.view.View').textMatches(/^(.*确定.*|.*我知道了.*)$/));
@@ -119,7 +127,6 @@ app.add('点击我的', (next) => {
       break;
     }
   }
-  // backward();
   findAndClickIt(desc('Navigate up'));
   next();
 

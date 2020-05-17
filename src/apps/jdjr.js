@@ -8,7 +8,7 @@ app.add('点击首页', (next) => {
   if (el) clickControl(el);
   next();
 }).add('点击每日签到', (next) => {
-  findAndClickIt(text('每日签到'));
+  findAndClickIt(className('android.widget.TextView').text('每日签到'));
   next();
 }).add('点击签到按钮', (next) => {
   findAndClickIt(textMatches(/^(.*已连续签到\d+天.*|.*签到领钢镚.*)$/));
