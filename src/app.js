@@ -1,5 +1,7 @@
 import {launchPackage, backToHome} from './util';
 
+const MAX_BACK_STEP = 'MAX_BACK_STEP'
+
 /**
  * @typedef Application
  * @property {(name: string, fn: (next: Function, tools: {backHome: Function}) => void) => Application} add
@@ -49,7 +51,13 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
    */
   function clear(noBack) {
     index = steps.length;
-    if (!noBack) backToHome(homePageCondition);
+    if (!noBack) {
+      try {
+        backToHome(homePageCondition);
+      } catch (e) {
+        throw new Error(MAX_BACK_STEP)
+      }
+    }
     log('【' + appName + '】清理完成');
     if (after) {
       after.run();
@@ -87,8 +95,12 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
         );
       } catch (e) {
         if (firstRoundFlag && app) failedTasks.push(app);
-        console.error(steps[index - 1][0] + ' 失败' + (e.message ? '：' + e.message : ''));
-        clear();
+        if (e.message === MAX_BACK_STEP) {
+          clear(true)
+        } else {
+          console.error(steps[index - 1][0] + ' 失败' + (e.message ? '：' + e.message : ''));
+          clear();
+        }
       }
     } else {
       clear();
