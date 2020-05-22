@@ -81,7 +81,7 @@ function launchPackage (packageName, condition, quitCondition, clickCenter) {
  * @param {number=} step
  */
 function backToHome(condition, maxStep, step) {
-  if (maxStep == null) maxStep = 8;
+  if (maxStep == null) maxStep = 12;
   if (step == null) step = 0
   sleep(500);
   /** @type {() => boolean} */
