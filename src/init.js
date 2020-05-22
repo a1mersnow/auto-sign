@@ -49,16 +49,17 @@ function main(apps) {
       let jdjrIndex = failedTasks.indexOf(jdjr)
       let jdmallIndex = failedTasks.indexOf(jdmall)
       // 京东金融如果失败了，需要再运行一遍京东
-      if (jdmallIndex > -1) {
-        failedTasks.splice(jdmallIndex, 1)
-      }
       if (jdjrIndex > -1) {
+        if (jdmallIndex > -1) {
+          failedTasks.splice(jdmallIndex, 1)
+        }
         failedTasks.push(jdmall)
       }
       failedTasks.forEach(task => {
         task.reset();
       })
-      createChain(failedTasks).run();
+      let chain = createChain(failedTasks)
+      chain.run();
     }
 
   } catch (e) {
