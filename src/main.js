@@ -7,7 +7,6 @@ import zsWx from './apps/zs-wx';
 import zsZfb from './apps/zs-zfb';
 import zsApp2 from './apps/zs-app2';
 import zsApp from './apps/zs-app';
-import gf from './apps/gf';
 import jt from './apps/jt';
 
 init(
@@ -20,7 +19,6 @@ init(
     zsZfb,
     zsApp2,
     zsApp,
-    gf,
     jt,
   ]
 );
