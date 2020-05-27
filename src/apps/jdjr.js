@@ -8,7 +8,8 @@ app.add('点击首页', (next) => {
   if (el) clickControl(el);
   next();
 }).add('点击每日签到', (next) => {
-  let el = className('android.widget.TextView').text('每日签到').findOne(MAX)
+  let el = className('android.widget.TextView').text('签到').findOne(MAX)
+  if (el == null) el = className('android.widget.TextView').text('每日签到').findOne(MAX)
   if (el) {
     clickControl(el)
   } else {
