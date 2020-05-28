@@ -27,11 +27,6 @@ app.add('点击我的', (next) => {
   findAndClickIt(text('我的任务'));
   sleep(500);
   let daily = text('日常任务').findOne(MAX);
-  while (!daily) {
-    let success = scrollDown();
-    if (!success) break;
-    daily = text('日常任务').findOnce();
-  }
   if (!daily) throw new Error('B');
   let p = daily.parent();
   if (!p) throw new Error('C');
@@ -53,6 +48,8 @@ app.add('点击我的', (next) => {
     let title = titleEl.text();
     let already = btn.text() === '领奖励';
     clickControl(btn);
+    let taskContentEl = idEndsWith('tv_desc').findOnce()
+    let longFlag = taskContentEl && /浏览10S/.test(taskContentEl.text())
     findAndClickIt(idMatches(/.*(btn_go|bt_go).*/));
     if (already) {
       task = getNextTask();
@@ -65,15 +62,33 @@ app.add('点击我的', (next) => {
       let yes = className('android.widget.Button').text('是').findOnce();
       if (yes) {
         clickControl(yes);
-        sleep(1000);
-      } else {
         sleep(2000);
+      } else {
+        sleep(3000);
         backward();
       }
       backward();
       sleep(2000);
     } else {
-      sleep(3000);
+      if (longFlag) {
+        sleep(2000);
+        scrollD(100);
+        sleep(2000);
+        scrollD(100);
+        sleep(2000);
+        scrollD(100);
+        sleep(2000);
+        scrollD(100);
+        sleep(2000);
+        scrollD(100);
+        sleep(2000);
+        scrollU(200);
+        sleep(1000);
+        scrollU(100);
+        sleep(1000);
+      } else {
+        sleep(4000);
+      }
       let close = desc('Navigate up').findOnce()
       let back = idEndsWith('iv_back').findOnce()
       if (close) {
@@ -135,7 +150,7 @@ app.add('点击我的', (next) => {
     if (t == null) return null;
     let p = t.parent();
     if (p == null) return null;
-    return sibling(p, 2);
+    return p.findOne(textMatches('级礼包'))
   }
 }).add('拔旗子', (next) => {
   findAndClickIt(idEndsWith('tv_login_sign'));
@@ -174,5 +189,24 @@ app.add('点击我的', (next) => {
   console.info('张大妈签到完成');
   next();
 });
+
+/**
+ * @param {number} dis
+ */
+function scrollU (dis) {
+  const x = device.width / 2
+  const y = device.height / 2
+  swipe(x, y, x, y - dis, 300)
+}
+
+/**
+ * @param {number} dis
+ */
+function scrollD (dis) {
+  const x = device.width / 2
+  const y = device.height / 2
+  swipe(x, y, x, y + dis, 300)
+}
+
 
 export default app;
