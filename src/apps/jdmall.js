@@ -16,7 +16,9 @@ app.add('点击我的', (next) => {
   clickControl(p);
   next();
 }).add('点击签到领京豆', (next) => {
-  findAndClickIt(textMatches(/^(签到领京豆|已连续签到)$/));
+  let el = textMatches(/^(签到领京豆|.*已连续签到.*)$/).findOne(MAX)
+  if (el == null) throw new Error('“签到领京豆”或“已连续签到”按钮不存在')
+  clickControl(el, true);
   next();
 }).add('返回京豆页面', (next) => {
   backward();
