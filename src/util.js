@@ -131,11 +131,31 @@ function backward() {
 }
 
 /**
- * @param  {string} x
+ * @param  {string} message
  */
-function log(x) {
-  console.verbose(x)
+function log(message) {
+  console.verbose(message)
+  var myDate = new Date();
+  ui.run(() => {
+    var newText = w.WZ.getText() + '\n' + ('0' + myDate.getHours()).slice(-2) + "时" + ('0' + myDate.getMinutes()).slice(-2) + "分" + ('0' + myDate.getSeconds()).slice(-2) + "秒：" + message
+    var newArr = newText.split('\n').filter(function (x) {return x}).slice(-8)
+    w.WZ.setText(newArr.join('\n'));
+    return true;
+  });
 }
+
+var w = floaty.rawWindow(
+  `<vertical bg="#80000000">
+    <text text="─ 当前脚本运行日志 ─" textSize="15" color="#FFFFFF" textStyle="bold" gravity="center" margin="0 0 0 5"/>
+    <ScrollView>
+      <text id="WZ" text="" textSize="15" color="#FFFFFF" marginLeft="10" marginBottom="10"  gravity="left"/>
+    </ScrollView>
+  </vertical>`
+);
+var logHeight = 700
+w.setSize(device.width, logHeight);
+w.setTouchable(false);
+w.setPosition(0, device.height - logHeight);
 
 /**
  *

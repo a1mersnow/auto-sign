@@ -1,4 +1,4 @@
-import {launchPackage, backToHome} from './util';
+import {launchPackage, backToHome, log} from './util';
 
 const MAX_BACK_STEP = 'MAX_BACK_STEP'
 
@@ -85,6 +85,7 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
     }
     if (index < steps.length) {
       try {
+        log('【' + appName + '】' + steps[index][0])
         steps[index++][1](
           next,
           {
