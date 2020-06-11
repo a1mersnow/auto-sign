@@ -8,18 +8,11 @@ app.add('点击首页', (next) => {
   if (el) clickControl(el);
   next();
 }).add('点击每日签到', (next) => {
-  let el = className('android.widget.TextView').text('签到').findOne(MAX)
-  if (el == null) el = className('android.widget.TextView').text('每日签到').findOne(MAX)
+  let el = className('android.widget.TextView').textEndsWith('签到').findOne(20000)
   if (el) {
     clickControl(el)
   } else {
-    let el = idEndsWith('banner_view_pager').findOne(MAX)
-    if (el == null) throw new Error('banner_view_pager not found')
-    let c = el.child(0)
-    if (c == null) throw new Error('recyclerview not found')
-    let i = c.child(4)
-    if (i == null) throw new Error('menu item not found')
-    clickControl(i)
+    throw new Error('每日签到按钮未找到')
   }
   next();
 }).add('点击签到按钮', (next) => {

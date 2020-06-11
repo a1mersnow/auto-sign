@@ -1,6 +1,7 @@
 import {setFirstRound, failedTasks} from './app';
 import jdmall from './apps/jdmall'
 import jdjr from './apps/jdjr'
+import {error} from './util'
 
 /**
  *
@@ -22,11 +23,6 @@ function main(apps) {
       engines.stopAll();
     });
   }
-
-  // 监听退出，显示日志
-  events.on('exit', () => {
-    console.show();
-  });
 
   // 用户设置密码
   if (!storages.create('password').get('password')) {
@@ -63,7 +59,7 @@ function main(apps) {
     }
 
   } catch (e) {
-    console.error(e.message);
+    error('[TOP ERROR]' + e.message);
   }
   engines.stopAll(); // to stop all listers
 }

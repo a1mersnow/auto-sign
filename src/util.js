@@ -135,24 +135,84 @@ function backward() {
  */
 function log(message) {
   console.verbose(message)
-  var myDate = new Date();
+  logToFloaty(message, 'info')
+}
+
+/**
+ * @param {string} message
+ */
+function error (message) {
+  console.error(message)
+  logToFloaty(message, 'error')
+}
+
+/**
+ * @param {string} message
+ * @param {string} type
+ */
+function logToFloaty (message, type) {
+  var now = new Date();
+  var time = ('0' + now.getHours()).slice(-2) + "时" + ('0' + now.getMinutes()).slice(-2) + "分" + ('0' + now.getSeconds()).slice(-2) + "秒"
+  message = time + message
   ui.run(() => {
-    var newText = w.WZ.getText() + '\n' + ('0' + myDate.getHours()).slice(-2) + "时" + ('0' + myDate.getMinutes()).slice(-2) + "分" + ('0' + myDate.getSeconds()).slice(-2) + "秒：" + message
-    var newArr = newText.split('\n').filter(function (x) {return x}).slice(-8)
-    w.WZ.setText(newArr.join('\n'));
+    var el = getEmpty(w)
+    if (el) {
+      // @ts-ignore
+      el.setTextColor(({
+        // @ts-ignore
+        'error': android.graphics.Color.RED,
+        // @ts-ignore
+        'info': android.graphics.Color.WHITE
+      })[type])
+      el.setText(message)
+    } else {
+      for (var i = 0; i < 9; i++) {
+        w['WZ' + i].setTextColor(w['WZ' + (i + 1)].getCurrentTextColor())
+        w['WZ' + i].setText(w['WZ' + (i + 1)].getText())
+      }
+      // @ts-ignore
+      w.WZ9.setTextColor(({
+        // @ts-ignore
+        'error': android.graphics.Color.RED,
+        // @ts-ignore
+        'info': android.graphics.Color.WHITE
+      })[type])
+      w.WZ9.setText(message)
+    }
     return true;
   });
 }
 
+/**
+ * @param {*} w
+ */
+function getEmpty (w) {
+  for (var i = 0; i < 10; i++) {
+    if (!w['WZ' + i].getText()) {
+      return w['WZ' + i]
+    }
+  }
+  return null
+}
+
 var w = floaty.rawWindow(
-  `<vertical bg="#80000000">
+  `<vertical bg="#ec0014" alpha="0.8" paddingBottom="15">
     <text text="─ 当前脚本运行日志 ─" textSize="15" color="#FFFFFF" textStyle="bold" gravity="center" margin="0 0 0 5"/>
-    <ScrollView>
-      <text id="WZ" text="" textSize="15" color="#FFFFFF" marginLeft="10" marginBottom="10"  gravity="left"/>
-    </ScrollView>
+    <text id="WZ0" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
+    <text id="WZ1" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
+    <text id="WZ2" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
+    <text id="WZ3" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
+    <text id="WZ4" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
+    <text id="WZ5" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
+    <text id="WZ6" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
+    <text id="WZ7" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
+    <text id="WZ8" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
+    <text id="WZ9" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
   </vertical>`
 );
-var logHeight = 700
+// @ts-ignore
+console.warn(android.graphics.Color.RED)
+var logHeight = 760
 w.setSize(device.width, logHeight);
 w.setTouchable(false);
 w.setPosition(0, device.height - logHeight);
@@ -194,6 +254,7 @@ export {
   launchPackage,
   backward,
   log,
+  error,
   sibling,
   clickControl,
   inputPasswordByGestrueOfCon

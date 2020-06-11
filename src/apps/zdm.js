@@ -155,7 +155,7 @@ app.add('点击我的', (next) => {
 }).add('拔旗子', (next) => {
   findAndClickIt(idEndsWith('tv_login_sign'));
   for (let i = 1; i <= 3; i++) {
-    let el = idEndsWith('v_duty_' + i).findOnce();
+    let el = idEndsWith('v_duty_' + i).findOne(MAX);
     if (el) clickControl(el);
     sleep(1000);
     let go = idEndsWith('btn_go').findOnce();

@@ -1,4 +1,4 @@
-import {launchPackage, backToHome, log} from './util';
+import {launchPackage, backToHome, log, error} from './util';
 
 const MAX_BACK_STEP = 'MAX_BACK_STEP'
 
@@ -97,10 +97,10 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
       } catch (e) {
         if (firstRoundFlag && app) failedTasks.push(app);
         if (e.message === MAX_BACK_STEP) {
-          console.error('在执行返回首页的过程中，超过最大返回次数：8次，遂放弃，转而执行下一个任务')
+          error('在执行返回首页的过程中，超过最大返回次数：8次，遂放弃，转而执行下一个任务')
           clear(true)
         } else {
-          console.error(steps[index - 1][0] + ' 失败' + (e.message ? '：' + e.message : ''));
+          error(steps[index - 1][0] + ' 失败' + (e.message ? '：' + e.message : ''));
           clear();
         }
       }
