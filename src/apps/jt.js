@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling, clickClose} from '../util';
+import {findAndClickIt, clickControl, output, backward, getNumberFromSelector, MAX, sibling, clickClose} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('买单吧', 'com.bankcomm.maidanba', () => text('首页').exists() && text('我的').exists());
@@ -53,7 +53,7 @@ app.add('点击我的', (next) => {
   findAndClickIt(className('android.widget.Button').text('完成'));
   next();
 }).add('签到成功', (next) => {
-  console.info('交行签到成功');
+  output('交行签到成功');
   next();
 });
 

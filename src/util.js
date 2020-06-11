@@ -145,6 +145,13 @@ function error (message) {
   console.error(message)
   logToFloaty(message, 'error')
 }
+/**
+* @param {string} message
+*/
+function output (message) {
+ console.info(message)
+ logToFloaty(message, 'output')
+}
 
 /**
  * @param {string} message
@@ -156,27 +163,24 @@ function logToFloaty (message, type) {
   message = time + message
   ui.run(() => {
     var el = getEmpty(w)
-    if (el) {
+    // @ts-ignore
+    var color = ({
       // @ts-ignore
-      el.setTextColor(({
-        // @ts-ignore
-        'error': android.graphics.Color.RED,
-        // @ts-ignore
-        'info': android.graphics.Color.WHITE
-      })[type])
+      'error': android.graphics.Color.RED,
+      // @ts-ignore
+      'info': android.graphics.Color.WHITE,
+      // @ts-ignore
+      'output': android.graphics.Color.GREEN
+    })[type]
+    if (el) {
+      el.setTextColor(color)
       el.setText(message)
     } else {
       for (var i = 0; i < 9; i++) {
         w['WZ' + i].setTextColor(w['WZ' + (i + 1)].getCurrentTextColor())
         w['WZ' + i].setText(w['WZ' + (i + 1)].getText())
       }
-      // @ts-ignore
-      w.WZ9.setTextColor(({
-        // @ts-ignore
-        'error': android.graphics.Color.RED,
-        // @ts-ignore
-        'info': android.graphics.Color.WHITE
-      })[type])
+      w.WZ9.setTextColor(color)
       w.WZ9.setText(message)
     }
     return true;
@@ -196,7 +200,7 @@ function getEmpty (w) {
 }
 
 var w = floaty.rawWindow(
-  `<vertical bg="#ec0014" alpha="0.8" paddingBottom="15">
+  `<vertical bg="#80000000" paddingBottom="15">
     <text text="─ 当前脚本运行日志 ─" textSize="15" color="#FFFFFF" textStyle="bold" gravity="center" margin="0 0 0 5"/>
     <text id="WZ0" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
     <text id="WZ1" textSize="13" color="#FFFFFF" marginLeft="10" marginBottom="0"  gravity="left"/>
@@ -255,6 +259,7 @@ export {
   backward,
   log,
   error,
+  output,
   sibling,
   clickControl,
   inputPasswordByGestrueOfCon

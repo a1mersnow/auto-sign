@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {findAndClickIt, clickControl, backward, output, getNumberFromSelector, MAX, sibling} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () => {
@@ -62,7 +62,7 @@ app.add('点击我的', (next) => {
   let score = sibling(t, 0);
   if (score == null) throw new Error('积分数字未找到');
   sleep(1000);
-  console.info('招行积分：' + score.text());
+  output('招行积分：' + score.text());
   next();
 });
 

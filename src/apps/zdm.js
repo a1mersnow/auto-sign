@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, output, MAX, sibling} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('张大妈', 'com.smzdm.client.android', 'com.smzdm.client.android.app.HomeActivity');
@@ -186,7 +186,7 @@ app.add('点击我的', (next) => {
   }
   next();
 }).add('完成', (next) => {
-  console.info('张大妈签到完成');
+  output('张大妈签到完成');
   next();
 });
 

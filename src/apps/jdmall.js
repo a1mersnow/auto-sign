@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {findAndClickIt, clickControl, backward, output, getNumberFromSelector, MAX, sibling} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('京东购物', 'com.jingdong.app.mall', 'com.jingdong.app.mall.MainFrameActivity');
@@ -64,7 +64,7 @@ app.add('点击我的', (next) => {
   if (t == null) throw new Error('没找到京豆二字');
   let n = sibling(t, 0);
   if (n == null) throw new Error('京豆上方没有数量');
-  console.info('京豆数量：' + n.text());
+  output('京豆数量：' + n.text());
   next();
 });
 
