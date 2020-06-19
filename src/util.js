@@ -30,9 +30,10 @@ function findAndClickIt(selector) {
  * @param {String} packageName
  * @param {string | (() => boolean)} condition
  * @param {(() => boolean) | void} quitCondition
- * @param {boolean} clickCenter
+ * @param {boolean} clickCenter]
+ * @param {(() => any) | void} closePopup
  */
-function launchPackage (packageName, condition, quitCondition, clickCenter) {
+function launchPackage (packageName, condition, quitCondition, clickCenter, closePopup) {
   let resolvedCondition;
   if (typeof condition === 'string') {
     resolvedCondition = () => currentActivity() === condition;
@@ -62,6 +63,9 @@ function launchPackage (packageName, condition, quitCondition, clickCenter) {
   }
   if (resolvedQuitCondition()) {
     throw new Error('该app未登录或不满足继续下去的条件');
+  }
+  if (closePopup) {
+    closePopup()
   }
   // 点击中心，消除可能的弹窗
   if (clickCenter) {
@@ -155,6 +159,14 @@ function output (message) {
 
 /**
  * @param {string} message
+ */
+function warn (message) {
+  console.warn(message)
+  logToFloaty(message, 'warn')
+}
+
+/**
+ * @param {string} message
  * @param {string} type
  */
 function logToFloaty (message, type) {
@@ -170,7 +182,9 @@ function logToFloaty (message, type) {
       // @ts-ignore
       'info': android.graphics.Color.WHITE,
       // @ts-ignore
-      'output': android.graphics.Color.GREEN
+      'output': android.graphics.Color.GREEN,
+      // @ts-ignore
+      'warn': android.graphics.Color.ORANGE
     })[type]
     if (el) {
       el.setTextColor(color)
@@ -215,7 +229,6 @@ var w = floaty.rawWindow(
   </vertical>`
 );
 // @ts-ignore
-console.warn(android.graphics.Color.RED)
 var logHeight = 760
 w.setSize(device.width, logHeight);
 w.setTouchable(false);
@@ -258,6 +271,7 @@ export {
   launchPackage,
   backward,
   log,
+  warn,
   error,
   output,
   sibling,

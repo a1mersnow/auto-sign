@@ -22,9 +22,10 @@ let firstRoundFlag = false
  * @param {(() => boolean) | string} homePageCondition
  * @param {(() => boolean) | void} quitCondition
  * @param {boolean | void} clickCenter
+ * @param {(() => any) | void} closePopup
  * @returns {Application}
  */
-function createApp(appName, packageName, homePageCondition, quitCondition, clickCenter) {
+function createApp(appName, packageName, homePageCondition, quitCondition, clickCenter, closePopup) {
   if (typeof clickCenter === 'undefined') clickCenter = true;
   /** @type {[string, Function][]} */
   let steps = [];
@@ -35,12 +36,12 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
   function init() {
     try {
       log('【' + appName + '】初始化...')
-      launchPackage(packageName, homePageCondition, quitCondition, /** @type {boolean} */(clickCenter));
+      launchPackage(packageName, homePageCondition, quitCondition, /** @type {boolean} */(clickCenter), closePopup);
       backToHome(homePageCondition);
       log('【' + appName + '】初始化成功');
       return true;
     } catch (e) {
-      log('【' + appName + '】初始化失败：' + e.message);
+      error('【' + appName + '】初始化失败：' + e.message);
       return false;
     }
   }
@@ -124,6 +125,7 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
       if (success) {
         next();
       } else {
+        failedTasks.push(app);
         clear(true);
       }
     },

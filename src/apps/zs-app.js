@@ -3,6 +3,9 @@ import {createApp} from '../app';
 
 let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () => {
   return text('饭票').exists && text('影票').exists() && text('积分').exists();
+}, undefined, undefined, () => {
+  let el = idEndsWith('tv_cancel').findOnce()
+  if (el) clickControl(el)
 });
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'));

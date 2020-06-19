@@ -1,7 +1,7 @@
 import {setFirstRound, failedTasks} from './app';
 import jdmall from './apps/jdmall'
 import jdjr from './apps/jdjr'
-import {error} from './util'
+import {error, warn} from './util'
 
 /**
  *
@@ -46,7 +46,7 @@ function main(apps) {
     setFirstRound(false);
 
     if (failedTasks.length) {
-      console.warn('第一轮失败的任务重试：');
+      warn('第一轮失败的任务重试：');
       let jdjrIndex = failedTasks.indexOf(jdjr)
       let jdmallIndex = failedTasks.indexOf(jdmall)
       // 京东金融如果失败了，需要再运行一遍京东

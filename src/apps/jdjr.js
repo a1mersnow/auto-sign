@@ -2,7 +2,11 @@ import {findAndClickIt, clickControl, log, backward, getNumberFromSelector, MAX}
 import {createApp} from '../app';
 
 let app = createApp('京东金融', 'com.jd.jrapp', 'com.jd.jrapp.bm.mainbox.main.MainActivity');
-app.add('点击首页', (next) => {
+app.add('关闭可能的弹窗', (next) => {
+  let el = idEndsWith('popup_close').findOne(MAX)
+  if (el) clickControl(el)
+  next()
+}).add('点击首页', (next) => {
   let el = className('android.widget.ImageView').idEndsWith('iv_first_icon').findOne(MAX);
   if (el == null) el = className('android.widget.RelativeLayout').idEndsWith('firstLayout').findOne(MAX);
   if (el) clickControl(el);
