@@ -24,6 +24,11 @@ function main(apps) {
     });
   }
 
+  // 监听退出，显示日志
+  events.on('exit', () => {
+    console.show();
+  });
+
   // 用户设置密码
   if (!storages.create('password').get('password')) {
     let pwd = dialogs.rawInput('掌上生活和招商银行请务必先设置手势密码，并且设置成同一个手势密码，手势密码一共有9个点，分别对应数字1-9，请按滑动顺序输入点对应的数字（为避免不必要的重复，只会要求输入一次，输入的密码会存在手机本地，如手势密码修改了，另有一个clear脚本来清除存储的密码）');
