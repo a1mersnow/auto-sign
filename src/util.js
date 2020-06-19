@@ -184,7 +184,7 @@ function logToFloaty (message, type) {
       // @ts-ignore
       'output': android.graphics.Color.GREEN,
       // @ts-ignore
-      'warn': android.graphics.Color.ORANGE
+      'warn': android.graphics.Color.BLUE
     })[type]
     if (el) {
       el.setTextColor(color)
