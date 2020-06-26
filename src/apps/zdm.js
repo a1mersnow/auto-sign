@@ -49,7 +49,7 @@ app.add('点击我的', (next) => {
     let already = btn.text() === '领奖励';
     clickControl(btn);
     let taskContentEl = idEndsWith('tv_desc').findOnce()
-    let longFlag = taskContentEl && /浏览10S/.test(taskContentEl.text())
+    let longFlag = taskContentEl && /浏览10S/i.test(taskContentEl.text())
     findAndClickIt(idMatches(/.*(btn_go|bt_go).*/));
     if (already) {
       task = getNextTask();
