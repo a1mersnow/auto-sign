@@ -18,7 +18,7 @@ app.add('点击我的', (next) => {
   let x = sibling(c, 2);
   if (x == null) throw new Error();
   clickControl(x);
-  sleep(1000);
+  sleep(5000);
   next();
 }).add('判断登陆状态', (next) => {
   if (text('每日签到').exists()) {

@@ -25,10 +25,12 @@ app.add('点击朋友', (next) => {
   clickControl(el);
   next();
 }).add('点击积分·福利', (next) => {
-  findAndClickIt(text('积分·福利'));
+  click(device.width - 30, device.height - 30);
   next();
 }).add('点击签到领积分', (next) => {
-  findAndClickIt(className('android.widget.TextView').textMatches(/.*签到领积分.*/));
+  let el = textMatches(/.*签到领积分.*/).findOne(MAX);
+  if (el == null) throw new Error('签到领积分按钮未找到')
+  clickControl(el, true);
   next();
 }).add('确认授权', (next) => {
   let el = className('android.widget.Button').text('确认授权').findOne(MAX);

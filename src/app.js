@@ -39,10 +39,11 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
       launchPackage(packageName, homePageCondition, quitCondition, /** @type {boolean} */(clickCenter), closePopup);
       backToHome(homePageCondition);
       log('【' + appName + '】初始化成功');
-      return true;
+      return 'goon';
     } catch (e) {
+      if (e.message === 'app启动失败') return 'skip'
       error('【' + appName + '】初始化失败：' + e.message);
-      return false;
+      return 'retry';
     }
   }
 
@@ -121,11 +122,13 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
       return this;
     },
     run() {
-      let success = init();
-      if (success) {
+      let result = init();
+      if (result === 'goon') {
         next();
-      } else {
+      } else if (result === 'retry') {
         failedTasks.push(app);
+        clear(true);
+      } else if (result === 'skip') {
         clear(true);
       }
     },
