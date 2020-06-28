@@ -74,15 +74,12 @@ function inputPassword(c, password) {
  * @returns {[number, number]}
  */
 function getPoint(rect, number) {
-  let xunit = rect.width() / 6;
-  let yunit = rect.height() / 6;
+  let short = Math.min(rect.width(), rect.height())
+  let xunit = short / 6;
+  let yunit = short / 6;
   let yc = Math.floor((number - 1) / 3);
   let xc = (number - 1) % 3;
-  let left = rect.left;
-  if (rect.width() > rect.height()) {
-    let d = rect.width() - rect.height();
-    left += d / 2;
-  }
+  let left = rect.left + ((rect.width() - rect.height()) / 2);
   return [
     left + ((2 * xc) + 1) * xunit,
     rect.top + ((2 * yc) + 1) * yunit

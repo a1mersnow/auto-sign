@@ -26,7 +26,7 @@ app.add('点击通讯录', (next) => {
   findAndClickIt(text('招商银行信用卡').className('android.widget.TextView'));
   next();
 }).add('点击右下角', (next) => {
-  click(device.width - 30, device.height - 30);
+  click(device.width - 70, device.height - 70);
   next();
 }).add('点击签到领积分', (next) => {
   findAndClickIt(className('android.widget.TextView').textMatches(/.*签到领积分.*/));

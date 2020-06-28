@@ -49,14 +49,16 @@ app.add('点击我的', (next) => {
     let already = btn.text() === '领奖励';
     clickControl(btn);
     let taskContentEl = idEndsWith('tv_desc').findOnce()
-    let longFlag = taskContentEl && /浏览10S/i.test(taskContentEl.text())
+    let longFlag = taskContentEl && /10S/i.test(taskContentEl.text())
     findAndClickIt(idMatches(/.*(btn_go|bt_go).*/));
     if (already) {
       task = getNextTask();
       continue;
     }
     if (/分享/.test(title)) {
-      sleep(3000);
+      sleep(2000);
+      scrollD(100);
+      sleep(2000);
       findAndClickIt(text('分享'));
       findAndClickIt(idEndsWith('tv_wx_session'));
       let yes = className('android.widget.Button').text('是').findOnce();
@@ -87,7 +89,9 @@ app.add('点击我的', (next) => {
         scrollU(100);
         sleep(1000);
       } else {
-        sleep(4000);
+        sleep(2000);
+        scrollD(100);
+        sleep(2000);
       }
       let close = desc('Navigate up').findOnce()
       let back = idEndsWith('iv_back').findOnce()
@@ -106,7 +110,7 @@ app.add('点击我的', (next) => {
   next();
 
   function getNextTask() {
-    let daily = text('日常任务').findOne(MAX);
+    let daily = text('日常任务').findOne(10000);
     if (!daily) throw new Error('F');
     let p = daily.parent();
     if (!p) throw new Error('G');

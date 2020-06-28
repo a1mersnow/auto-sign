@@ -19,13 +19,13 @@ app.add('点击朋友', (next) => {
   if (el == null) throw new Error();
   el.setText('招商银行信用');
   next();
-}).add('点击已关注', (next) => {
+}).add('点击搜索结果中的招行信用卡', (next) => {
   let el = text('已关注').findOne(MAX);
   if (el == null) throw new Error('请先关注招商银行信用卡生活号');
   clickControl(el);
   next();
 }).add('点击积分·福利', (next) => {
-  click(device.width - 30, device.height - 30);
+  click(device.width - 70, device.height - 70);
   next();
 }).add('点击签到领积分', (next) => {
   let el = textMatches(/.*签到领积分.*/).findOne(MAX);
