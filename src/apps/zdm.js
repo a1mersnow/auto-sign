@@ -176,19 +176,6 @@ app.add('点击我的', (next) => {
     }
   }
   next();
-}).add('补签', (next) => {
-  let b = text('补签').findOne(MAX);
-  if (b) {
-    clickControl(b);
-    sleep(500);
-    let t = text('确定').findOnce();
-    if (t) {
-      clickControl(t);
-    } else {
-      backward();
-    }
-  }
-  next();
 }).add('完成', (next) => {
   output('张大妈签到完成');
   next();
