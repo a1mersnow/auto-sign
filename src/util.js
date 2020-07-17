@@ -17,11 +17,13 @@ function getNumberFromSelector(selector) {
 
 /**
  * @param {UiSelector} selector
+ * @param {Number | void} max
  */
-function findAndClickIt(selector) {
-  let el = selector.findOne(MAX / 2);
+function findAndClickIt(selector, max) {
+  max || (max = MAX);
+  let el = selector.findOne(max / 2);
   sleep(100);
-  if (el == null) el = selector.findOne(MAX / 2);
+  if (el == null) el = selector.findOne(max / 2);
   if (el == null) throw new Error();
   clickControl(el);
 }

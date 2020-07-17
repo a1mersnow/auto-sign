@@ -73,17 +73,17 @@ function main(apps) {
 /**
  * @template {import('./app').Application} T
  * @param {T[]} arr
- * @returns {T}
+ * @returns {{run: Function}}
  */
 function createChain(arr) {
-  arr.forEach((app, index, arr) => {
-    if (arr[index + 1]) {
-      app.after(arr[index + 1]);
-    } else {
-      app.after(null);
+  return {
+    run () {
+      for (let i = 0; i < arr.length; i++) {
+        let app = arr[i];
+        app.run();
+      }
     }
-  });
-  return arr[0];
+  };
 }
 
 export default main;

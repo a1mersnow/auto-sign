@@ -2,7 +2,7 @@ import {findAndClickIt, clickControl, backward, output, getNumberFromSelector, M
 import {createApp} from '../app';
 
 let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () => {
-  return text('饭票').exists && text('影票').exists() && text('积分').exists();
+  return text('我的').exists() && text('金融').exists();
 }, undefined, undefined, () => {
   let el = idEndsWith('tv_cancel').findOnce()
   if (el) clickControl(el)

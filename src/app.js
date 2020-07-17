@@ -1,13 +1,10 @@
 import {launchPackage, backToHome, log, error} from './util';
 
-const MAX_BACK_STEP = 'MAX_BACK_STEP'
-
 /**
  * @typedef Application
  * @property {(name: string, fn: (next: Function, tools: {backHome: Function}) => void) => Application} add
  * @property {Function} run
  * @property {Function} reset
- * @property {(x: Application | null) => void} after
  * @property {() => string} getName
  */
 
@@ -30,8 +27,6 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
   /** @type {[string, Function][]} */
   let steps = [];
   let index = 0;
-  /** @type {Application | null} */
-  let after
 
   function init() {
     try {
@@ -53,19 +48,16 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
    */
   function clear(noBack) {
     index = steps.length;
+    let clearFlag = true;
     if (!noBack) {
       try {
         backToHome(homePageCondition);
       } catch (e) {
-        throw new Error(MAX_BACK_STEP)
+        // do nothing, just ignore
+        clearFlag = false;
       }
     }
-    log('【' + appName + '】清理完成');
-    if (after) {
-      after.run();
-    } else {
-      log('脚本运行完毕');
-    }
+    log('【' + appName + '】' + (clearFlag ? '清理完成' : '清理未完成'));
   }
 
   /**
@@ -98,13 +90,8 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
         );
       } catch (e) {
         if (firstRoundFlag && app) failedTasks.push(app);
-        if (e.message === MAX_BACK_STEP) {
-          error('在执行返回首页的过程中，超过最大返回次数：8次，遂放弃，转而执行下一个任务')
-          clear(true)
-        } else {
-          error(steps[index - 1][0] + ' 失败' + (e.message ? '：' + e.message : ''));
-          clear();
-        }
+        error('【' + appName + '】' + steps[index - 1][0] + ' 失败' + (e.message ? '：' + e.message : ''));
+        clear();
       }
     } else {
       clear();
@@ -131,10 +118,6 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
       } else if (result === 'skip') {
         clear(true);
       }
-    },
-    after(app) {
-      after = app;
-      return this;
     },
     reset() {
       index = 0;
