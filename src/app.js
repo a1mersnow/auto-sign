@@ -89,7 +89,7 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
           }
         );
       } catch (e) {
-        if (firstRoundFlag && app) failedTasks.push(app);
+        if (isFirstRound() && app) failedTasks.push(app);
         error('【' + appName + '】' + steps[index - 1][0] + ' 失败' + (e.message ? '：' + e.message : ''));
         clear();
       }
@@ -113,7 +113,9 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
       if (result === 'goon') {
         next();
       } else if (result === 'retry') {
-        failedTasks.push(app);
+        if (isFirstRound()) {
+          failedTasks.push(app);
+        }
         clear(true);
       } else if (result === 'skip') {
         clear(true);
