@@ -18,7 +18,8 @@ app.add('点击通讯录', (next) => {
   clickControl(search);
   next();
 }).add('输入招商银行信用卡', (next) => {
-  let el = text('搜索').findOne(MAX);
+  let el = text('搜索').findOne(1000);
+  if (!el) el = text('搜索公众号').findOne(MAX);
   if (!el) throw new Error();
   el.setText('招商银行信用卡');
   next();
