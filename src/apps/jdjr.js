@@ -2,23 +2,29 @@ import {findAndClickIt, clickControl, log, backward, getNumberFromSelector, MAX}
 import {createApp} from '../app';
 
 let app = createApp('京东金融', 'com.jd.jrapp', 'com.jd.jrapp.bm.mainbox.main.MainActivity');
+let hasClickIndex = false
 app.add('关闭可能的弹窗', (next) => {
   let el = idEndsWith('popup_close').findOne(MAX)
   if (el) clickControl(el)
-  next()
+  next('点击每日签到')
 }).add('点击首页', (next) => {
+  hasClickIndex = true
   let el = className('android.widget.ImageView').idEndsWith('iv_first_icon').findOne(MAX);
   if (el == null) el = className('android.widget.RelativeLayout').idEndsWith('firstLayout').findOne(MAX);
   if (el) clickControl(el);
   next();
 }).add('点击每日签到', (next) => {
-  let el = className('android.widget.TextView').textEndsWith('签到').findOne(20000)
+  let el = text('每日签到').findOne(20000)
   if (el) {
     clickControl(el)
+    next()
   } else {
-    throw new Error('每日签到按钮未找到')
+    if (!hasClickIndex) {
+      next('点击首页')
+    } else {
+      throw new Error('未找到每日签到入口')
+    }
   }
-  next();
 }).add('点击签到按钮', (next) => {
   findAndClickIt(textMatches(/^(.*已连续签到?\d+天.*|.*签到领钢镚.*)$/));
   next();
