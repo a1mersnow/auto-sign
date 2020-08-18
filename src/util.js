@@ -69,14 +69,6 @@ function launchPackage (packageName, condition, quitCondition, clickCenter, clos
   if (closePopup) {
     closePopup()
   }
-  // 点击中心，消除可能的弹窗
-  if (clickCenter) {
-    click(device.width / 2, device.height / 2);
-    sleep(1000);
-    if (!resolvedCondition()) {
-      backward();
-    }
-  }
 }
 
 
