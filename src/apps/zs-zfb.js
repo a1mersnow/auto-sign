@@ -1,7 +1,10 @@
 import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
 import {createApp} from '../app';
 
-let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', 'com.eg.android.AlipayGphone.AlipayLogin', () => idEndsWith('registerAccount').text('注册账号').exists());
+let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', 'com.eg.android.AlipayGphone.AlipayLogin', () => idEndsWith('registerAccount').text('注册账号').exists(), undefined, () => {
+  const el = text('稍后再说').findOne(MAX)
+  if (el != null) clickControl(el)
+});
 app.add('点击朋友', (next) => {
   findAndClickIt(text('朋友'));
   next();
