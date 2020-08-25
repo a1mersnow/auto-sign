@@ -1,0 +1,52 @@
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*'
+
+name: Create Release
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: yarn
+
+      - run: yarn build
+
+      - name: Get commit log
+        id: log
+        run: echo "::set-output name=value::$(git log ${{ github.ref }} --pretty=format:"%s")"
+
+      - name: Get filename
+        id: filename
+        run: |
+          name=$(ls ./dist/auto-sign-*.js)
+          echo "::set-output name=value::${name##*/}"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            ${{ steps.log.outputs.value }}
+          draft: false
+          prerelease: false
+
+      - name: Upload release assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/${{ steps.filename.outputs.value }}
+          asset_name: ${{ steps.filename.outputs.value }}
+          asset_content_type: application/javascript
