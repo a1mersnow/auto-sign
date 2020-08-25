@@ -1,7 +1,10 @@
 import {findAndClickIt, clickControl, backward, getNumberFromSelector, output, MAX, sibling} from '../util';
 import {createApp} from '../app';
 
-let app = createApp('张大妈', 'com.smzdm.client.android', 'com.smzdm.client.android.app.HomeActivity');
+let app = createApp('张大妈', 'com.smzdm.client.android', 'com.smzdm.client.android.app.HomeActivity', undefined, undefined, () => {
+  const el = idEndsWith('_close').findOne(MAX)
+  if (el) clickControl(el)
+});
 app.add('点击我的', (next) => {
   findAndClickIt(idEndsWith('tab_usercenter'));
   next();
