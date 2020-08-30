@@ -14,15 +14,21 @@ app.add('关闭可能的弹窗', (next) => {
   if (el) clickControl(el);
   next();
 }).add('点击每日签到', (next) => {
-  let el = text('每日签到').findOne(20000)
+  let el = text('签到').findOne(MAX)
   if (el) {
     clickControl(el)
     next()
   } else {
-    if (!hasClickIndex) {
-      next('点击首页')
+    let mel = text('每日签到').findOne(MAX)
+    if (mel) {
+      clickControl(mel)
+      next()
     } else {
-      throw new Error('未找到每日签到入口')
+      if (!hasClickIndex) {
+        next('点击首页')
+      } else {
+        throw new Error('未找到每日签到入口')
+      }
     }
   }
 }).add('点击签到按钮', (next) => {

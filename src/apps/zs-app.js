@@ -10,6 +10,10 @@ let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () 
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'));
   next();
+}).add('关闭可能的弹窗', next => {
+  const el = idEndsWith('_close').findOne(MAX)
+  if (el) clickControl(el)
+  next()
 }).add('点击签到按钮', (next) => {
   let t = text('资料管理').findOne(MAX);
   if (t == null) throw new Error();
