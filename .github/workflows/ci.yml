@@ -19,7 +19,7 @@ jobs:
 
       - name: Get commit log
         id: log
-        run: echo "::set-output name=value::$(git log ${{ github.ref }} --pretty=format:"%s")"
+        run: echo "::set-output name=value::$(git log ${{ github.ref }} --pretty=format:"%B")"
 
       - name: Get filename
         id: filename
