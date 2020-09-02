@@ -197,6 +197,7 @@ interface UiObject {
   boundsInParent(): Rect
   drawingOrder(): number
   id(): string | null
+  indexInParent(): number
   className(): string
   text(): string
   findByText(str: string): UiCollection

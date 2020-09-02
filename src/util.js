@@ -34,8 +34,9 @@ function findAndClickIt(selector, max) {
  * @param {(() => boolean) | void} quitCondition
  * @param {boolean} clickCenter]
  * @param {(() => any) | void} closePopup
+ * @param {(() => any) | void} goThruGuide
  */
-function launchPackage (packageName, condition, quitCondition, clickCenter, closePopup) {
+function launchPackage (packageName, condition, quitCondition, clickCenter, closePopup, goThruGuide) {
   let resolvedCondition;
   if (typeof condition === 'string') {
     resolvedCondition = () => currentActivity() === condition;
@@ -58,6 +59,10 @@ function launchPackage (packageName, condition, quitCondition, clickCenter, clos
     clickControl(leap);
     sleep(2000);
   }
+  // 引导页可能没有跳过
+  if (goThruGuide) {
+    goThruGuide()
+  }
   let index = 5;
   while (!resolvedQuitCondition() && !resolvedCondition() && index > 0) {
     sleep(1000);
@@ -65,6 +70,9 @@ function launchPackage (packageName, condition, quitCondition, clickCenter, clos
   }
   if (resolvedQuitCondition()) {
     throw new Error('该app未登录或不满足继续下去的条件');
+  }
+  if (!resolvedCondition()) {
+    throw new Error('该app可能更新了版本，导致脚本无法继续');
   }
   if (closePopup) {
     closePopup()
@@ -120,6 +128,42 @@ function sibling(x, i) {
     return p.child(i)
   }
   return null
+}
+/**
+ *
+ * @param {UiObject} x
+ * @param {Number | void} offset
+ */
+function nextSibling (x, offset) {
+  offset || (offset = 1)
+  let idx = -1
+  let p = x.parent()
+  if (p && p.children) {
+    let ch = p.children()
+    for (let i = 0; i < ch.length; i++) {
+      if (sameBounds(ch.get(i), x)) {
+        idx = i
+        break
+      }
+    }
+    if (idx === -1) return null
+    let dst = idx + offset
+    if (dst >= ch.length) return null
+    return ch.get(idx + offset)
+  }
+  return null
+}
+
+/**
+ *
+ * @param {UiObject} x
+ * @param {UiObject} y
+ * @returns {boolean}
+ */
+function sameBounds (x, y) {
+  const xb = x.bounds()
+  const yb = y.bounds()
+  return xb.top === yb.top && xb.left === yb.left && xb.right === yb.right && xb.bottom === yb.bottom
 }
 
 function backward() {
@@ -256,6 +300,55 @@ function clickClose() {
   }
 }
 
+/**
+ * @param {number} dis
+ * @param {number | void} y
+ * @param {number | void} duration
+ */
+function scrollU (dis, y, duration) {
+  y || (y = device.height / 2)
+  duration || (duration = 100)
+  const x = device.width / 2
+  swipe(x, y, x, y - dis, duration)
+}
+
+/**
+ * @param {number} dis
+ * @param {number | void} y
+ * @param {number | void} duration
+ */
+function scrollD (dis, y, duration) {
+  y || (y = device.height / 2)
+  duration || (duration = 100)
+  const x = device.width / 2
+  swipe(x, y, x, y + dis, duration)
+}
+
+/**
+ * @param {number} dis
+ * @param {number | void} x
+ * @param {number | void} duration
+ */
+function scrollL (dis, x, duration) {
+  x || (x = device.width / 2)
+  duration || (duration = 100)
+  const y = device.height / 2
+  swipe(x, y, x - dis, y, duration)
+}
+
+/**
+ * @param {number} dis
+ * @param {number | void} x
+ * @param {number | void} duration
+ */
+function scrollR (dis, x, duration) {
+  x || (x = device.width / 2)
+  duration || (duration = 100)
+  const y = device.height / 2
+  swipe(x, y, x + dis, y, duration)
+}
+
+
 export {
   clickClose,
   MAX,
@@ -270,5 +363,10 @@ export {
   output,
   sibling,
   clickControl,
-  inputPasswordByGestrueOfCon
+  inputPasswordByGestrueOfCon,
+  scrollD,
+  scrollU,
+  scrollL,
+  scrollR,
+  nextSibling
 }

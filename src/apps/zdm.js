@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, getNumberFromSelector, output, MAX, sibling} from '../util';
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, output, MAX, sibling, scrollU, scrollD, nextSibling} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('张大妈', 'com.smzdm.client.android', 'com.smzdm.client.android.app.HomeActivity', undefined, undefined, () => {
@@ -29,91 +29,102 @@ app.add('点击我的', (next) => {
 
   findAndClickIt(text('我的任务'));
   sleep(500);
-  let daily = text('日常任务').findOne(MAX);
-  if (!daily) throw new Error('B');
-  let p = daily.parent();
-  if (!p) throw new Error('C');
-  let listContainer = sibling(p, 1);
-  if (!listContainer) throw new Error('D');
-  let expand = listContainer.findOne(text('展开'));
-  if (expand) {
-    let expandParent = expand.parent();
-    if (expandParent) {
-      clickControl(expandParent);
-    }
-  }
-  let task = getNextTask();
-  while (task) {
-    let titleEl = task.findOne(idEndsWith('tv_title'));
-    if (!titleEl) throw new Error('D');
-    let btn = task.findOne(idEndsWith('tv_get'));
-    if (!btn) throw new Error('E');
-    let title = titleEl.text();
-    let already = btn.text() === '领奖励';
-    clickControl(btn);
-    let taskContentEl = idEndsWith('tv_desc').findOnce()
-    let longFlag = taskContentEl && /10S/i.test(taskContentEl.text())
-    findAndClickIt(idMatches(/.*(btn_go|bt_go).*/));
-    if (already) {
-      task = getNextTask();
-      continue;
-    }
-    if (/分享/.test(title)) {
-      sleep(2000);
-      scrollD(100);
-      sleep(2000);
-      findAndClickIt(text('分享'));
-      findAndClickIt(idEndsWith('tv_wx_session'));
-      let yes = className('android.widget.Button').text('是').findOnce();
-      if (yes) {
-        clickControl(yes);
-        sleep(2000);
-      } else {
-        sleep(3000);
-        backward();
-      }
-      backward();
-      sleep(2000);
-    } else {
-      if (longFlag) {
-        sleep(2000);
-        scrollD(100);
-        sleep(2000);
-        scrollD(100);
-        sleep(2000);
-        scrollD(100);
-        sleep(2000);
-        scrollD(100);
-        sleep(2000);
-        scrollD(100);
-        sleep(2000);
-        scrollU(200);
-        sleep(1000);
-        scrollU(100);
-        sleep(1000);
-      } else {
-        sleep(2000);
-        scrollD(100);
-        sleep(2000);
-      }
-      let close = desc('Navigate up').findOnce()
-      let back = idEndsWith('iv_back').findOnce()
-      if (close) {
-        clickControl(close);
-      } else if (back) {
-        clickControl(back)
-      } else {
-        backward();
-      }
-      sleep(2000);
-    }
-    task = getNextTask();
-  }
+  round('日常任务')
+  round('活动任务')
   backward();
   next();
 
-  function getNextTask() {
-    let daily = text('日常任务').findOne(10000);
+  /**
+   * @param {string} label 任务标题
+   */
+  function round (label) {
+    let daily = text(label).findOne(MAX);
+    if (!daily) throw new Error('B');
+    let p = daily.parent();
+    if (!p) throw new Error('C');
+    let listContainer = sibling(p, 1);
+    if (!listContainer) throw new Error('D');
+    let expand = listContainer.findOne(text('展开'));
+    if (expand) {
+      let expandParent = expand.parent();
+      if (expandParent) {
+        clickControl(expandParent);
+      }
+    }
+    let task = getNextTask(label);
+    while (task) {
+      let titleEl = task.findOne(idEndsWith('tv_title'));
+      if (!titleEl) throw new Error('D');
+      let btn = task.findOne(idEndsWith('tv_get'));
+      if (!btn) throw new Error('E');
+      let title = titleEl.text();
+      let already = btn.text() === '领奖励';
+      clickControl(btn);
+      let taskContentEl = idEndsWith('tv_desc').findOnce()
+      let longFlag = taskContentEl && /10S/i.test(taskContentEl.text())
+      findAndClickIt(idMatches(/.*(btn_go|bt_go).*/));
+      if (already) {
+        task = getNextTask(label);
+        continue;
+      }
+      if (/分享/.test(title)) {
+        sleep(2000);
+        scrollD(100);
+        sleep(2000);
+        findAndClickIt(text('分享'));
+        findAndClickIt(idEndsWith('tv_wx_session'));
+        let yes = className('android.widget.Button').text('是').findOnce();
+        if (yes) {
+          clickControl(yes);
+          sleep(2000);
+        } else {
+          sleep(3000);
+          backward();
+        }
+        backward();
+        sleep(2000);
+      } else {
+        if (longFlag) {
+          sleep(2000);
+          scrollU(100);
+          sleep(2000);
+          scrollU(100);
+          sleep(2000);
+          scrollU(100);
+          sleep(2000);
+          scrollU(100);
+          sleep(2000);
+          scrollU(100);
+          sleep(2000);
+          scrollD(200);
+          sleep(1000);
+          scrollD(100);
+          sleep(1000);
+        } else {
+          sleep(2000);
+          scrollU(100);
+          sleep(2000);
+        }
+        let close = desc('Navigate up').findOnce()
+        let back = idEndsWith('iv_back').findOnce()
+        if (close) {
+          clickControl(close);
+        } else if (back) {
+          clickControl(back)
+        } else {
+          backward();
+        }
+        sleep(2000);
+      }
+      task = getNextTask(label);
+    }
+  }
+
+  /**
+   * @param {string} label
+   */
+  function getNextTask(label) {
+    let daily = text(label).findOne(10000);
     if (!daily) throw new Error('F');
     let p = daily.parent();
     if (!p) throw new Error('G');
@@ -129,9 +140,15 @@ app.add('点击我的', (next) => {
       if (titleEl == null || btnEl == null) continue;
       let title = titleEl.text();
       let btnText = btnEl.text();
-      if (btnText !== '已完成' && !/幸运屋|关注|栏目/.test(title) && ((count[title] || 0) < 4)) {
-        count[title] = (count[title] || 0) + 1;
-        return task;
+      if (label === '日常任务') {
+        if (btnText !== '已完成' && !/幸运屋|关注|栏目/.test(title) && ((count[title] || 0) < 4)) {
+          count[title] = (count[title] || 0) + 1;
+          return task;
+        }
+      } else if (label === '活动任务') {
+        if (btnText !== '已完成' && btnText !== '明天再来') {
+          return task;
+        }
       }
     }
   }
@@ -157,24 +174,26 @@ app.add('点击我的', (next) => {
     if (t == null) return null;
     let p = t.parent();
     if (p == null) return null;
-    return p.findOne(textMatches('级礼包'))
+    return nextSibling(p)
   }
 }).add('拔旗子', (next) => {
   findAndClickIt(idEndsWith('tv_login_sign'));
   for (let i = 1; i <= 3; i++) {
-    let el = idEndsWith('v_duty_' + i).findOne(MAX);
-    if (el) clickControl(el);
-    sleep(1000);
-    let go = idEndsWith('btn_go').findOnce();
-    if (go) {
-      clickControl(go);
-    } else {
-      let go2 = idEndsWith('bt_go').findOnce();
-      if (go2) {
-        clickControl(go2);
+    let el = idEndsWith('v_duty_' + i).findOne(1000);
+    if (el) {
+      clickControl(el);
+      sleep(1000);
+      let go = idEndsWith('btn_go').findOnce();
+      if (go) {
+        clickControl(go);
       } else {
-        let go3 = textMatches(/.*知道了.*/).findOnce();
-        if (go3) clickControl(go3);
+        let go2 = idEndsWith('bt_go').findOnce();
+        if (go2) {
+          clickControl(go2);
+        } else {
+          let go3 = textMatches(/.*知道了.*/).findOnce();
+          if (go3) clickControl(go3);
+        }
       }
     }
   }
@@ -183,24 +202,5 @@ app.add('点击我的', (next) => {
   output('张大妈签到完成');
   next();
 });
-
-/**
- * @param {number} dis
- */
-function scrollU (dis) {
-  const x = device.width / 2
-  const y = device.height / 2
-  swipe(x, y, x, y - dis, 300)
-}
-
-/**
- * @param {number} dis
- */
-function scrollD (dis) {
-  const x = device.width / 2
-  const y = device.height / 2
-  swipe(x, y, x, y + dis, 300)
-}
-
 
 export default app;

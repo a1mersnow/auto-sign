@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, output, getNumberFromSelector, MAX, sibling} from '../util';
+import {findAndClickIt, clickControl, backward, output, getNumberFromSelector, MAX, sibling, scrollL} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () => {
@@ -6,6 +6,16 @@ let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () 
 }, undefined, undefined, () => {
   let el = idEndsWith('tv_cancel').findOnce()
   if (el) clickControl(el)
+}, () => {
+  const el = idEndsWith('rg_content').findOne(1000)
+  if (el) {
+    swipe(device.width - 100, device.height / 2, 100, device.height / 2, 300)
+    sleep(500)
+    swipe(device.width - 100, device.height / 2, 100, device.height / 2, 300)
+    sleep(500)
+    swipe(device.width - 100, device.height / 2, 100, device.height / 2, 300)
+    sleep(500)
+  }
 });
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'));
