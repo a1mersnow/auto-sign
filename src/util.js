@@ -68,6 +68,30 @@ function launchPackage (packageName, condition, quitCondition, clickCenter, clos
     sleep(1000);
     index--;
   }
+  // 回到首页或退回桌面
+  if (!resolvedCondition()) {
+    let i = 8
+    while (i--) {
+      backward()
+      sleep(100)
+    }
+    if (!resolvedCondition()) {
+      sleep(2000)
+      backward()
+    }
+    b = app.launchPackage(packageName)
+    if (!b) throw new Error('app启动失败')
+    // app双开处理
+    resolver = id('android:id/resolver_list').findOne(1000);
+    if (resolver) {
+      let apps = resolver.find(className('android.widget.LinearLayout').clickable());
+      clickControl(apps[0]);
+    }
+  }
+  while (!resolvedQuitCondition() && !resolvedCondition() && index > 0) {
+    sleep(1000);
+    index--;
+  }
   if (resolvedQuitCondition()) {
     throw new Error('该app未登录或不满足继续下去的条件');
   }

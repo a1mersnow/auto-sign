@@ -39,7 +39,7 @@ app.add('点击我的', (next) => {
    */
   function round (label) {
     let daily = text(label).findOne(MAX);
-    if (!daily) throw new Error('B');
+    if (!daily) return
     let p = daily.parent();
     if (!p) throw new Error('C');
     let listContainer = sibling(p, 1);
