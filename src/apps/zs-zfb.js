@@ -14,10 +14,10 @@ app.add('点击搜索', (next) => {
   el.setText('招商银行信用卡');
   next();
 }).add('点击搜索结果中的招行信用卡', (next) => {
-  findAndClickIt(text('生活号'))
+  findAndClickIt(className('android.widget.TextView').text('招商银行信用卡'))
   next()
 }).add('选择招商银行信用卡', (next) => {
-  findAndClickIt(text('招商银行信用卡'))
+  findAndClickIt(className('android.widget.TextView').text('招商银行信用卡'))
   next()
 }).add('同意并继续', (next) => {
   const el = text('同意并继续').findOne(1000)

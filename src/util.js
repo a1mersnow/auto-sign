@@ -88,6 +88,7 @@ function launchPackage (packageName, condition, quitCondition, clickCenter, clos
       clickControl(apps[0]);
     }
   }
+  index = 5;
   while (!resolvedQuitCondition() && !resolvedCondition() && index > 0) {
     sleep(1000);
     index--;

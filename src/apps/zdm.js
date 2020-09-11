@@ -152,7 +152,9 @@ app.add('点击我的', (next) => {
     let no = listItem.findOne(textEndsWith('未达成'));
     if (no == null) {
       clickControl(listItem);
+      let flag = textStartsWith('领取失败').findOnce()
       findAndClickIt(className('android.view.View').textMatches(/^(.*确定.*|.*我知道了.*)$/));
+      if (flag) break
       sleep(1000);
       listItem = getNextBag();
     } else {
