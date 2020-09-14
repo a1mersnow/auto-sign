@@ -17,7 +17,7 @@ app.add('点击搜索', (next) => {
   findAndClickIt(className('android.widget.TextView').text('招商银行信用卡'))
   next()
 }).add('选择招商银行信用卡', (next) => {
-  findAndClickIt(className('android.widget.TextView').text('招商银行信用卡'))
+  findAndClickIt(className('android.widget.TextView').clickable(false).text('招商银行信用卡'))
   next()
 }).add('同意并继续', (next) => {
   const el = text('同意并继续').findOne(1000)
