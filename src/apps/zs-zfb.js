@@ -1,12 +1,16 @@
 import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
 import {createApp} from '../app';
 
-let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', 'com.eg.android.AlipayGphone.AlipayLogin', () => idEndsWith('registerAccount').text('注册账号').exists(), undefined, () => {
+let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', () => {
+  return text('首页').exists() && text('我的').exists();
+}, () => idEndsWith('registerAccount').text('注册账号').exists(), undefined, () => {
   const el = text('稍后再说').findOne(MAX)
   if (el != null) clickControl(el)
 });
 app.add('点击搜索', (next) => {
-  findAndClickIt(idEndsWith('search_bg'))
+  const el = idEndsWith('search_bg').findOne()
+  if (el == null) throw new Error('未找到搜索框')
+  clickControl(el, true)
   next()
 }).add('输入招商银行信用卡', (next) => {
   let el = idEndsWith('search_input_box').className('android.widget.EditText').findOne(MAX);
