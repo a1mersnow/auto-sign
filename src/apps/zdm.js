@@ -27,7 +27,7 @@ app.add('点击我的', (next) => {
    */
   let count = {};
 
-  findAndClickIt(text('我的任务'));
+  findAndClickIt(textMatches(/我的任务|任务活动/));
   sleep(500);
   roundDo()
   roundBonus()
