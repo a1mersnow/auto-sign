@@ -106,13 +106,14 @@ app.add('点击我的', (next) => {
 
   /**
    *
-   * @param {UiObject} task
+   * @param {number} i
+   * @param {(x: number) => UiObject} getTask
    */
-  function handleTask (task) {
-    let title = /** @type {UiObject} */(task.findOne(idEndsWith('tv_title'))).text()
+  function handleTask (i, getTask) {
+    let title = /** @type {UiObject} */(getTask(i).findOne(idEndsWith('tv_title'))).text()
     let btn
     if (/发布|晒|达人推荐|关注|爆料任务|原创|邀请|幸运屋|完善|栏目/.test(title)) return
-    while ((btn = task.findOne(text('去完成'))) && (count[title] || 0) < 7) {
+    while ((btn = getTask(i).findOne(text('去完成'))) && (count[title] || 0) < 7) {
       clickControl(btn)
       let desc = /** @type {UiObject} */(idEndsWith('tv_desc').findOne(MAX)).text()
       let longFlag = /10S/i.test(desc)
@@ -120,19 +121,20 @@ app.add('点击我的', (next) => {
       if (/分享/.test(desc)) {
         doShareTask()
       } else {
-        doReadTask(longFlag)
+        // 一律按照长阅读处理
+        doReadTask(true)
       }
       count[title] = (count[title] || 0) + 1
     }
   }
 
   function roundDo () {
-    let container = idEndsWith('rc_list').findOne(MAX)
-    if (!container) throw new Error('未找到任务列表')
-    let tasks = container.children()
-    for (let i = 0; i < tasks.length; ++i) {
-      let task = /** @type {UiObject} */(idEndsWith('rc_list').findOnce()).children().get(i)
-      handleTask(task)
+    // @ts-ignore
+    let tasks = () => idEndsWith('rc_list').findOne(MAX).children()
+    for (let i = 0; i < tasks().length; ++i) {
+      // @ts-ignore
+      let getTask = x => /** @type {UiObject} */(idEndsWith('rc_list').findOnce()).children().get(x)
+      handleTask(i, getTask)
     }
   }
 
@@ -165,7 +167,8 @@ app.add('点击我的', (next) => {
   next();
 
   function getNextBag() {
-    let t = text('待领取礼包').findOne(MAX);
+    let t = text('活动礼包').findOne(MAX);
+    if (t == null) t = text('待领取礼包').findOne(MAX);
     if (t == null) return null;
     let p = t.parent();
     if (p == null) return null;

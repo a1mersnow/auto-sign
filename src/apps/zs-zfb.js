@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling, scrollD} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', () => {
@@ -7,7 +7,69 @@ let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', () => {
   const el = text('稍后再说').findOne(MAX)
   if (el != null) clickControl(el)
 });
-app.add('点击搜索', (next) => {
+
+app.add('点击朋友', (next) => {
+  let el = text('朋友').findOne(MAX)
+  if (el) {
+    clickControl(el)
+    next();
+  } else {
+    next('点击搜索');
+  }
+})/** 旧版 START */.add('[旧] 看看有没有招商银行信用卡', (next) => {
+  const el = text('招商银行信用卡').findOne(MAX)
+  if (el) {
+    clickControl(el)
+    next('点击右下角')
+  } else {
+    next()
+  }
+}).add('[旧] 点击生活号', (next) => {
+  findAndClickIt(text('生活号'));
+  next();
+}).add('[旧] 先尝试搜索不行再点击已关注', (next) => {
+  const el = text('搜索你感兴趣的生活号').findOne(MAX)
+  if (el) {
+    clickControl(el)
+    next('[旧] 输入招商银行信用卡')
+  } else {
+    findAndClickIt(text('已关注'));
+    next();
+  }
+}).add('[旧] 点击搜索', (next) => {
+  let el
+  let el2
+  el = desc('搜索生活号').findOne(MAX)
+  if (el) {
+    clickControl(el)
+    next()
+  } else {
+    el2 = text('招商银行信用卡').findOne(MAX)
+    if (el2) {
+      scrollD(500)
+      sleep(100)
+      scrollD(500)
+      sleep(100)
+      scrollD(500)
+      sleep(100)
+      scrollD(500)
+      clickControl(el2)
+      next('点击右下角')
+    } else {
+      throw new Error('请先关注招商银行信用卡')
+    }
+  }
+}).add('[旧] 输入招商银行信用卡', (next) => {
+  let el = text('搜索生活号').className('android.widget.EditText').findOne(MAX);
+  if (el == null) throw new Error();
+  el.setText('招商银行信用');
+  next();
+}).add('[旧] 点击搜索结果中的招行信用卡', (next) => {
+  let el = text('已关注').findOne(MAX);
+  if (el == null) throw new Error('请先关注招商银行信用卡生活号');
+  clickControl(el);
+  next();
+})/** 旧版 END */.add('点击搜索', (next) => {
   const el = idEndsWith('search_bg').findOne()
   if (el == null) throw new Error('未找到搜索框')
   clickControl(el, true)
@@ -21,7 +83,12 @@ app.add('点击搜索', (next) => {
   findAndClickIt(className('android.widget.TextView').text('招商银行信用卡'))
   next()
 }).add('选择招商银行信用卡', (next) => {
-  findAndClickIt(className('android.widget.TextView').clickable(false).text('招商银行信用卡'))
+  let a = className('android.widget.TextView').text('信用卡积分').findOne(MAX)
+  if (!a) throw new Error('a')
+  // @ts-ignore
+  let p = a.parent().parent().parent()
+  if (!p) throw new Error('p')
+  clickControl(p)
   next()
 }).add('同意并继续', (next) => {
   const el = text('同意并继续').findOne(1000)
