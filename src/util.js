@@ -63,6 +63,9 @@ function launchPackage (packageName, condition, quitCondition, clickCenter, clos
   if (goThruGuide) {
     goThruGuide()
   }
+  if (closePopup) {
+    closePopup()
+  }
   let index = 5;
   while (!resolvedQuitCondition() && !resolvedCondition() && index > 0) {
     sleep(1000);
