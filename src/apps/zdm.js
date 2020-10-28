@@ -1,7 +1,7 @@
 import {findAndClickIt, clickControl, backward, getNumberFromSelector, output, MAX, sibling, scrollU, scrollD, nextSibling, log} from '../util';
 import {createApp} from '../app';
 
-let app = createApp('张大妈', 'com.smzdm.client.android', 'com.smzdm.client.android.app.HomeActivity', undefined, undefined, () => {
+let app = createApp('张大妈', 'com.smzdm.client.android', () => text('首页').exists() && text('我的').exists(), undefined, undefined, () => {
   const el = idEndsWith('_close').findOne(MAX)
   if (el) clickControl(el)
 });
@@ -112,7 +112,7 @@ app.add('点击我的', (next) => {
   function handleTask (i, getTask) {
     let title = /** @type {UiObject} */(getTask(i).findOne(idEndsWith('tv_title'))).text()
     let btn
-    if (/发布|晒|达人推荐|关注|爆料任务|原创|邀请|幸运屋|完善|栏目/.test(title)) return
+    if (/发布|晒|达人推荐|关注|爆料任务|原创|创作|邀请|幸运屋|完善|栏目/.test(title)) return
     while ((btn = getTask(i).findOne(text('去完成'))) && (count[title] || 0) < 7) {
       clickControl(btn)
       let desc = /** @type {UiObject} */(idEndsWith('tv_desc').findOne(MAX)).text()
@@ -145,6 +145,15 @@ app.add('点击我的', (next) => {
     while ((btn = text('领奖励').findOne(1500))) {
       clickControl(btn)
       findAndClickIt(idMatches(/.*(btn_go|bt_go).*/))
+      sleep(1500)
+      let el = text('我的任务').findOne(1500)
+      if (el == null) {
+        try {
+          findAndClickIt(desc('Navigate up'))
+        } catch (e) {
+          // nothing
+        }
+      }
     }
   }
 }).add('我的礼包', (next) => {

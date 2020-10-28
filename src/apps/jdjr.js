@@ -32,7 +32,7 @@ app.add('关闭可能的弹窗', (next) => {
     }
   }
 }).add('点击签到按钮', (next) => {
-  findAndClickIt(textMatches(/^(.*已连续签到?\d+天.*|.*签到领钢镚.*)$/));
+  findAndClickIt(textMatches(/^(.*已连续签到?\d+天.*|.*签到.*钢镚.*)$/));
   next();
 });
 
