@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, output, getNumberFromSelector, MAX, sibling} from '../util';
+import {findAndClickIt, clickControl, backward, output, getNumberFromSelector, MAX, sibling, log} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('京东购物', 'com.jingdong.app.mall', 'com.jingdong.app.mall.MainFrameActivity');
@@ -23,8 +23,75 @@ app.add('点击我的', (next) => {
 }).add('返回京豆页面', (next) => {
   backward();
   next();
+}).add('横向滑动', (next) => {
+  let el = className('android.widget.HorizontalScrollView').findOnce()
+  if (el) {
+    el.scrollRight()
+  } else {
+    log('未找到横向滑动容器')
+  }
+  next()
+}).add('抽京豆', (next) => {
+  while (true) {
+    let el = text('抽京豆').findOne(MAX)
+    if (el) {
+      clickControl(el, true)
+      let ref = text('我的奖品').findOne(MAX)
+      // @ts-ignore
+      let numEl = ref.parent().parent().parent().child(4)
+      if (numEl) {
+        let match = /今日还可以抽\s*([0-9]+)\s*次哦/.exec(numEl.text())
+        if (match && match[1] && +match[1] > 0) {
+          let el = text('我的奖品').findOne(MAX)
+          // @ts-ignore
+          let p = el.parent().parent().parent().child(3)
+          if (p) {
+            clickControl(p, true)
+            sleep(2000)
+            backward()
+          }
+        } else {
+          backward()
+          log('次数不够了')
+          break
+        }
+      } else {
+        backward()
+        log('没有获取到次数信息')
+        break
+      }
+    } else {
+      break
+    }
+  }
+  next()
+}).add('摇京豆', (next) => {
+  let el = text('摇京豆').findOne(MAX)
+  if (el) {
+    clickControl(el, true)
+    // 摇一摇
+    /** @type {UiObject | null} */
+    let hit = text('摇一摇 有惊喜').findOne(MAX)
+    if (hit) clickControl(hit)
+    findAndClickIt(desc('返回'))
+  }
+
+  next()
+
+  function hasRemain () {
+    let full = textMatches(/已达上限/).findOnce()
+    if (full) return false
+    let el = textMatches(/已完成[0-9]\/[0-9]/).findOne(MAX)
+    if (el) {
+      let m = /已完成([0-9])\/([0-9])/.exec(el.text())
+      if (m) {
+        return m[1] < m[2]
+      }
+    }
+  }
+
 }).add('点击双签', (next) => {
-  findAndClickIt(text('双签领豆'));
+  findAndClickIt(text('双签领豆'), undefined, true);
   next();
 }).add('点击立即领取', (next) => {
   let el = text('立即领取').findOne(MAX);
@@ -33,7 +100,7 @@ app.add('点击我的', (next) => {
     next('查看京豆数量');
   } else {
     backward();
-    findAndClickIt(text('双签领豆'));
+    findAndClickIt(text('双签领豆'), undefined, true);
     next();
   }
 }).add('点击`完成双签领取`', (next) => {
@@ -54,7 +121,7 @@ app.add('点击我的', (next) => {
   }
   combo();
   backward();
-  findAndClickIt(text('双签领豆'));
+  findAndClickIt(text('双签领豆'), undefined, true);
   combo();
   next();
 }).add('查看京豆数量', (next, tools) => {

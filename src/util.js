@@ -18,14 +18,16 @@ function getNumberFromSelector(selector) {
 /**
  * @param {UiSelector} selector
  * @param {Number | void} max
+ * @param {Boolean | void} locationFlag
  */
-function findAndClickIt(selector, max) {
+function findAndClickIt(selector, max, locationFlag) {
   max || (max = MAX);
+  locationFlag || (locationFlag = false);
   let el = selector.findOne(max / 2);
   sleep(100);
   if (el == null) el = selector.findOne(max / 2);
   if (el == null) throw new Error();
-  clickControl(el);
+  clickControl(el, locationFlag);
 }
 
 /**

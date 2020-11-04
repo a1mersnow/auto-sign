@@ -27,7 +27,13 @@ app.add('点击我的', (next) => {
    */
   let count = {};
 
-  findAndClickIt(textMatches(/我的任务|任务活动/));
+  scrollD(500);
+  sleep(500);
+  scrollD(500);
+  sleep(500);
+  scrollD(500);
+  let m = textMatches(/我的任务|任务活动/).findOne(MAX)
+  if (m) clickControl(m, true)
   sleep(500);
   roundDo()
   roundBonus()
@@ -38,7 +44,13 @@ app.add('点击我的', (next) => {
     sleep(2000);
     scrollD(500);
     sleep(2000);
-    findAndClickIt(text('分享'));
+    let shareBtn = text('分享').findOne(MAX);
+    if (!shareBtn) {
+      backward()
+      return 'break'
+    } else {
+      clickControl(shareBtn)
+    }
     findAndClickIt(idEndsWith('tv_wx_session'));
     let yes = className('android.widget.Button').text('是').findOnce();
     if (yes) {
@@ -119,7 +131,8 @@ app.add('点击我的', (next) => {
       let longFlag = /10S/i.test(desc)
       findAndClickIt(idMatches(/.*(btn_go|bt_go).*/));
       if (/分享/.test(desc)) {
-        doShareTask()
+        let result = doShareTask()
+        if (result === 'break') break;
       } else {
         // 一律按照长阅读处理
         doReadTask(true)
