@@ -27,13 +27,9 @@ app.add('点击我的', (next) => {
    */
   let count = {};
 
-  scrollD(500);
-  sleep(500);
-  scrollD(500);
-  sleep(500);
-  scrollD(500);
   let m = textMatches(/我的任务|任务活动/).findOne(MAX)
-  if (m) clickControl(m, true)
+  // @ts-ignore
+  if (m) clickControl(m.parent())
   sleep(500);
   roundDo()
   roundBonus()
