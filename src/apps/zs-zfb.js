@@ -80,7 +80,7 @@ app.add('点击朋友', (next) => {
   el.setText('招商银行信用卡');
   next();
 }).add('点击搜索结果中的招行信用卡', (next) => {
-  findAndClickIt(className('android.widget.TextView').text('招商银行信用卡'))
+  findAndClickIt(className('android.widget.TextView').textStartsWith('招商银行信用卡'))
   next()
 }).add('选择招商银行信用卡', (next) => {
   let a = className('android.widget.TextView').text('信用卡积分').findOne(MAX)

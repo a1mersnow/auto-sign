@@ -17,7 +17,11 @@ let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () 
     sleep(500)
   }
 });
-app.add('点击我的', (next) => {
+app.add('关闭可能的弹窗', next => {
+  const el = idEndsWith('_close').findOne(MAX)
+  if (el) clickControl(el)
+  next()
+}).add('点击我的', (next) => {
   findAndClickIt(text('我的'));
   next();
 }).add('关闭可能的弹窗', next => {
