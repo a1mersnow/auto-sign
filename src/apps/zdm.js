@@ -151,7 +151,7 @@ app.add('点击我的', (next) => {
     let container = idEndsWith('rc_list').findOne(MAX)
     if (!container) throw new Error('未找到任务列表')
     let btn
-    while ((btn = text('领奖励').findOne(1500))) {
+    while ((btn = textMatches(/领奖励|领取大奖/).findOne(1500))) {
       clickControl(btn)
       findAndClickIt(idMatches(/.*(btn_go|bt_go).*/))
       sleep(1500)

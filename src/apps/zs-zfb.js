@@ -8,7 +8,15 @@ let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', () => {
   if (el != null) clickControl(el)
 });
 
-app.add('点击朋友', (next) => {
+app.add('点击消息', (next) => {
+  let el = text('消息').findOne(MAX)
+  if (el) {
+    clickControl(el)
+    next('选择招商银行信用卡');
+  } else {
+    next();
+  }
+}).add('点击朋友', (next) => {
   let el = text('朋友').findOne(MAX)
   if (el) {
     clickControl(el)
@@ -83,12 +91,12 @@ app.add('点击朋友', (next) => {
   findAndClickIt(className('android.widget.TextView').textStartsWith('招商银行信用卡'))
   next()
 }).add('选择招商银行信用卡', (next) => {
-  let a = className('android.widget.TextView').text('信用卡积分').findOne(MAX)
-  if (!a) throw new Error('a')
-  // @ts-ignore
-  let p = a.parent().parent().parent()
-  if (!p) throw new Error('p')
-  clickControl(p)
+  let b = className('android.widget.TextView').text('招商银行信用卡').findOne(MAX)
+  if (b) {
+    clickControl(b, true)
+  } else {
+    throw new Error('未找到入口')
+  }
   next()
 }).add('同意并继续', (next) => {
   const el = text('同意并继续').findOne(1000)
