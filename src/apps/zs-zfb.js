@@ -76,7 +76,7 @@ app.add('点击消息', (next) => {
   let el = text('已关注').findOne(MAX);
   if (el == null) throw new Error('请先关注招商银行信用卡生活号');
   clickControl(el);
-  next();
+  next('同意并继续');
 })/** 旧版 END */.add('点击搜索', (next) => {
   const el = idEndsWith('search_bg').findOne()
   if (el == null) throw new Error('未找到搜索框')
