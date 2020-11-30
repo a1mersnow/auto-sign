@@ -19,7 +19,7 @@ let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () 
 });
 app.add('关闭升级提示', next => {
   const el = text('暂不体验').findOne(MAX)
-  if (el) clickControl(el)
+  if (el) clickControl(el, true)
   next()
 }).add('关闭可能的弹窗', next => {
   const el = idEndsWith('_close').findOne(MAX)
@@ -28,6 +28,10 @@ app.add('关闭升级提示', next => {
 }).add('点击我的', (next) => {
   findAndClickIt(text('我的'));
   next();
+}).add('关闭升级提示', next => {
+  const el = text('暂不体验').findOne(MAX)
+  if (el) clickControl(el, true)
+  next()
 }).add('关闭可能的弹窗', next => {
   const el = idEndsWith('_close').findOne(MAX)
   if (el) clickControl(el)
