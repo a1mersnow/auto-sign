@@ -33,6 +33,7 @@ app.add('点击通讯录', (next) => {
   findAndClickIt(className('android.widget.TextView').textMatches(/.*会员中心.*/));
   next();
 }).add('点击签到有礼', (next) => {
+  sleep(3000)
   findAndClickIt(text('签到有礼'));
   next();
 }).add('点击签到按钮', (next) => {
