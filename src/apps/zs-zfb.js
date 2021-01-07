@@ -12,7 +12,19 @@ app.add('点击消息', (next) => {
   let el = text('消息').findOne(MAX)
   if (el) {
     clickControl(el)
-    next('选择招商银行信用卡');
+    sleep(500)
+    let b = className('android.widget.TextView').text('招商银行信用卡').findOne(MAX)
+    if (b) {
+      clickControl(b, true)
+    } else {
+      let c = text('首页').findOne(MAX)
+      if (c) {
+        clickControl(c)
+        next('点击搜索')
+      } else {
+        throw new Error('返回首页入口失败')
+      }
+    }
   } else {
     next();
   }
