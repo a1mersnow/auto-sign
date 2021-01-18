@@ -8,6 +8,7 @@ import zsZfb from './apps/zs-zfb';
 import zsApp2 from './apps/zs-app2';
 import zsApp from './apps/zs-app';
 import robam from './apps/robam'
+import ysf from './apps/ysf'
 
 // 所有模块
 let all = [
@@ -20,6 +21,7 @@ let all = [
   zsApp2,
   zsApp,
   robam,
+  ysf,
 ]
 
 let idxs = all.map(function (_, i) { return i })
@@ -28,7 +30,7 @@ let idxs = all.map(function (_, i) { return i })
 let st = storages.create('pick');
 if (!st.get('pick')) {
   // select of user
-  let sofu = dialogs.multiChoice('你尚未选择过所需模块，请选择（默认全选，如需重新选择，请执行clear脚本）：', ['一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招行支付宝', '招商银行', '掌上生活', '微信老板电器'], idxs)
+  let sofu = dialogs.multiChoice('你尚未选择过所需模块，请选择（默认全选，如需重新选择，请执行clear脚本）：', ['一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招行支付宝', '招商银行', '掌上生活', '微信老板电器', '云闪付'], idxs)
   if (sofu.length === 0) {
     toast('请至少选择一个模块')
   } else {
