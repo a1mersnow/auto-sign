@@ -302,6 +302,10 @@ w.setSize(device.width, logHeight);
 w.setTouchable(false);
 w.setPosition(0, device.height - logHeight);
 
+function closeLog () {
+  w.close()
+}
+
 /**
  *
  * @param {UiCollection} points
@@ -398,5 +402,6 @@ export {
   scrollU,
   scrollL,
   scrollR,
-  nextSibling
+  nextSibling,
+  closeLog,
 }

@@ -39,14 +39,14 @@ interface MultipartFormData {
 }
 
 declare namespace http {
-  function get(url: string, options?: Partial<RequestOptions>): Response[]
-  function get(url: string, options?: Partial<RequestOptions>, callback?: (rs: Response[]) => void): void
-  function post(url: string, data: string | object, options?: Partial<RequestOptions>): Response[]
-  function post(url: string, data: string | object, options?: Partial<RequestOptions>, callback?: (rs: Response[]) => void): void
-  function postJson(url: string, data: object, options?: Partial<RequestOptions>): Response[]
-  function postJson(url: string, data: object, options?: Partial<RequestOptions>, callback?: (rs: Response[]) => void): void
-  function postMultipart(url: string, files: MultipartFormData, options?: Partial<RequestOptions>): Response[]
-  function postMultipart(url: string, files: MultipartFormData, options?: Partial<RequestOptions>, callback?: (rs: Response[]) => void): void
-  function request(url: string, options?: Partial<RequestOptions>): Response[]
-  function request(url: string, options?: Partial<RequestOptions>, callback?: (rs: Response[]) => void): void
+  function get(url: string, options?: Partial<RequestOptions>): Response
+  function get(url: string, options?: Partial<RequestOptions>, callback?: (rs: Response) => void): void
+  function post(url: string, data: string | object, options?: Partial<RequestOptions>): Response
+  function post(url: string, data: string | object, options?: Partial<RequestOptions>, callback?: (rs: Response) => void): void
+  function postJson(url: string, data: object, options?: Partial<RequestOptions>): Response
+  function postJson(url: string, data: object, options?: Partial<RequestOptions>, callback?: (rs: Response) => void): void
+  function postMultipart(url: string, files: MultipartFormData, options?: Partial<RequestOptions>): Response
+  function postMultipart(url: string, files: MultipartFormData, options?: Partial<RequestOptions>, callback?: (rs: Response) => void): void
+  function request(url: string, options?: Partial<RequestOptions>): Response
+  function request(url: string, options?: Partial<RequestOptions>, callback?: (rs: Response) => void): void
 }

@@ -5,13 +5,13 @@
  */
 interface paramScriptConfig {
   /** ms 默认0 */
-  delay: number;
+  delay?: number;
   /** 默认1 0为无限循环 */
-  loopTimes: number;
-  interval: number;
+  loopTimes?: number;
+  interval?: number;
   /** 指定脚本运行的目录
    * 这些路径会用于require时寻找模块文件 */
-  path: string | string[];
+  path?: string | string[];
 }
 interface ScriptConfig {
   /** ms 默认0 */
