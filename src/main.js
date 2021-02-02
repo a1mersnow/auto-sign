@@ -55,7 +55,7 @@ function main () {
         let deleteFlag = files.remove(filepath)
         log('删除' + (deleteFlag ? '成功' : '失败'))
         log('🎉 即将开始运行新脚本 🎉')
-        const DELAY = 1000;
+        let DELAY = 1000;
         setTimeout(function () {
           closeLog()
         }, DELAY)
