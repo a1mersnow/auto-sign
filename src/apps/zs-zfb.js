@@ -16,6 +16,7 @@ app.add('点击消息', (next) => {
     let b = className('android.widget.TextView').text('招商银行信用卡').findOne(MAX)
     if (b) {
       clickControl(b, true)
+      next('同意并继续')
     } else {
       let c = text('首页').findOne(MAX)
       if (c) {

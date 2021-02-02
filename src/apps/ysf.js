@@ -3,7 +3,12 @@ import {createApp} from '../app';
 
 let app = createApp('云闪付', 'com.unionpay', () => {
   return text('首 页').exists() && text('我 的').exists();
-}, undefined, false);
+}, undefined, false, () => {
+  let el = text('稍候再说').findOne(MAX)
+  if (el) {
+    clickControl(el, true)
+  }
+});
 app.add('点击我的', (next) => {
   findAndClickIt(text('我 的'));
   next();
