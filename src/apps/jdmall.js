@@ -16,7 +16,7 @@ app.add('点击我的', (next) => {
   clickControl(p);
   next();
 }).add('点击签到领京豆', (next) => {
-  let el = textMatches(/^(签到领京豆|.*已连续签到.*)$/).findOne(MAX)
+  let el = textMatches(/^(签到领京豆|.*已连续签到.*|.*已连签.*)$/).findOne(MAX)
   if (el == null) throw new Error('“签到领京豆”或“已连续签到”按钮不存在')
   clickControl(el, true);
   next();
@@ -33,7 +33,7 @@ app.add('点击我的', (next) => {
   next()
 }).add('抽京豆', (next) => {
   while (true) {
-    let el = text('抽京豆').findOne(MAX)
+    let el = findEntry(11) || text('抽京豆').findOne(MAX)
     if (el) {
       clickControl(el, true)
       let ref = text('我的奖品').findOne(MAX)
@@ -66,7 +66,7 @@ app.add('点击我的', (next) => {
   }
   next()
 }).add('摇京豆', (next) => {
-  let el = text('摇京豆').findOne(MAX)
+  let el = findEntry(12) || text('摇京豆').findOne(MAX)
   if (el) {
     clickControl(el, true)
     // 摇一摇
@@ -91,7 +91,9 @@ app.add('点击我的', (next) => {
   }
 
 }).add('点击双签', (next) => {
-  findAndClickIt(text('双签领豆'), undefined, true);
+  let el = findEntry(8) || text('双签领豆').findOne(MAX)
+  if (!el)  throw new Error()
+  clickControl(el, true)
   next();
 }).add('点击立即领取', (next) => {
   let el = text('立即领取').findOne(MAX);
@@ -100,7 +102,9 @@ app.add('点击我的', (next) => {
     next('查看京豆数量');
   } else {
     backward();
-    findAndClickIt(text('双签领豆'), undefined, true);
+    let el = findEntry(8) || text('双签领豆').findOne(MAX)
+    if (!el)  throw new Error()
+    clickControl(el, true)
     next();
   }
 }).add('点击`完成双签领取`', (next) => {
@@ -121,7 +125,9 @@ app.add('点击我的', (next) => {
   }
   combo();
   backward();
-  findAndClickIt(text('双签领豆'), undefined, true);
+  let el = findEntry(8) || text('双签领豆').findOne(MAX)
+  if (!el)  throw new Error()
+  clickControl(el, true)
   combo();
   next();
 }).add('查看京豆数量', (next, tools) => {
@@ -134,5 +140,35 @@ app.add('点击我的', (next) => {
   output('京豆数量：' + n.text());
   next();
 });
+
+/**
+ *
+ * @param {number} childIndex
+ */
+function findEntry (childIndex) {
+  let root = className('android.widget.FrameLayout').findOne(MAX)
+  if (root) {
+    // @ts-ignore
+    let target = root.child(0) // LinearLayout
+      .child(0) // FrameLayout
+      .child(0) // LinearLayout
+      .child(0) // FrameLayout
+      .child(0) // RelativeLayout
+      .child(0) // LinearLayout
+      .child(0) // FrameLayout
+      .child(0) // android.view.ViewGroup
+      .child(0) // android.view.ViewGroup
+      .child(0) // android.view.ViewGroup
+      .child(0) // ScrollView
+      .child(0) // android.view.ViewGroup
+      .child(0) // android.view.ViewGroup
+      .child(0) // android.view.ViewGroup
+      .child(0) // android.view.ViewGroup
+      .child(childIndex)
+
+    if (!target) throw new Error('find entry fail: ' + childIndex)
+    return target
+  }
+}
 
 export default app;
