@@ -22,7 +22,7 @@ app.add('点击我的', (next) => {
   sleep(2000)
   next()
 }).add('点击立即签到', next => {
-  findAndClickIt(textMatches(/^立即签到$|^今日已签到$/))
+  findAndClickIt(textMatches(/^立即签到$|^邀请好友签到$/))
   next()
 })
 
