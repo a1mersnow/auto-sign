@@ -34,6 +34,13 @@ declare function idStartsWith(prefix: string): UiSelector
 declare function idEndsWith(suffix: string): UiSelector
 declare function idMatches(reg: string | RegExp): UiSelector
 declare function className(str: string): UiSelector
+declare function depth(x: number): UiSelector
+declare function enabled(x: boolean): UiSelector
+declare function editable(x: boolean): UiSelector
+declare function selected(x: boolean): UiSelector
+declare function scrollable(x: boolean): UiSelector
+declare function checked(x: boolean): UiSelector
+declare function indexInParent(x: boolean): UiSelector
 declare function classNameContains(str: string): UiSelector
 declare function classNameStartsWith(prefix: string): UiSelector
 declare function classNameEndsWith(suffix: string): UiSelector
@@ -50,10 +57,6 @@ declare function drawingOrder(order: number): UiSelector
 declare function clickable(b?: boolean): UiSelector
 declare function longClickable(b?: boolean): UiSelector
 declare function checkable(b?: boolean): UiSelector
-declare function selected(b?: boolean): UiSelector
-declare function enabled(b?: boolean): UiSelector
-declare function scrollable(b?: boolean): UiSelector
-declare function editable(b?: boolean): UiSelector
 declare function multiLine(b?: boolean): UiSelector
 
 
@@ -116,6 +119,8 @@ interface UiSelector {
 
   checkable(b?: boolean): UiSelector
 
+  checked(b?: boolean): UiSelector
+
   selected(b?: boolean): UiSelector
 
   enabled(b?: boolean): UiSelector
@@ -125,6 +130,8 @@ interface UiSelector {
   editable(b?: boolean): UiSelector
 
   multiLine(b?: boolean): UiSelector
+
+  depth(x: number): UiSelector
 
   /** 阻塞 DFS */
   findOne(): UiObject

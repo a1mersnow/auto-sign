@@ -20,20 +20,19 @@ app.add('点击我的', (next) => {
   if (el == null) throw new Error('“签到领京豆”或“已连续签到”按钮不存在')
   clickControl(el, true);
   next();
-}).add('返回京豆页面', (next) => {
+}).add('回到游戏页面', (next) => {
   backward();
-  next();
-}).add('横向滑动', (next) => {
-  let el = className('android.widget.HorizontalScrollView').findOnce()
-  if (el) {
-    el.scrollRight()
-  } else {
-    log('未找到横向滑动容器')
+  let t = textMatches(/^(去签到领京豆|已签到)$/).findOne(MAX);
+  if (t) {
+    let p = t.parent();
+    if (p) {
+      clickControl(p);
+    }
   }
-  next()
+  next();
 }).add('抽京豆', (next) => {
   while (true) {
-    let el = findEntry(11) || text('抽京豆').findOne(MAX)
+    let el = findEntry(-2)
     if (el) {
       clickControl(el, true)
       let ref = text('我的奖品').findOne(MAX)
@@ -66,32 +65,18 @@ app.add('点击我的', (next) => {
   }
   next()
 }).add('摇京豆', (next) => {
-  let el = findEntry(12) || text('摇京豆').findOne(MAX)
+  let el = findEntry(-1);
   if (el) {
-    clickControl(el, true)
-    // 摇一摇
-    /** @type {UiObject | null} */
-    let hit = text('摇一摇 有惊喜').findOne(MAX)
-    if (hit) clickControl(hit)
-    findAndClickIt(desc('返回'))
+    clickControl(el, true);
+    sleep(4000);
+    click(device.width / 2, device.height * 8 / 9);
+    sleep(2000);
+    findAndClickIt(desc('返回'));
   }
 
-  next()
-
-  function hasRemain () {
-    let full = textMatches(/已达上限/).findOnce()
-    if (full) return false
-    let el = textMatches(/已完成[0-9]\/[0-9]/).findOne(MAX)
-    if (el) {
-      let m = /已完成([0-9])\/([0-9])/.exec(el.text())
-      if (m) {
-        return m[1] < m[2]
-      }
-    }
-  }
-
+  next();
 }).add('点击双签', (next) => {
-  let el = findEntry(8) || text('双签领豆').findOne(MAX)
+  let el = findEntry(-5)
   if (!el)  throw new Error()
   clickControl(el, true)
   next();
@@ -102,7 +87,7 @@ app.add('点击我的', (next) => {
     next('查看京豆数量');
   } else {
     backward();
-    let el = findEntry(8) || text('双签领豆').findOne(MAX)
+    let el = findEntry(-5)
     if (!el)  throw new Error()
     clickControl(el, true)
     next();
@@ -125,7 +110,7 @@ app.add('点击我的', (next) => {
   }
   combo();
   backward();
-  let el = findEntry(8) || text('双签领豆').findOne(MAX)
+  let el = findEntry(-5) || text('双签领豆').findOne(MAX)
   if (!el)  throw new Error()
   clickControl(el, true)
   combo();
@@ -146,29 +131,14 @@ app.add('点击我的', (next) => {
  * @param {number} childIndex
  */
 function findEntry (childIndex) {
-  let root = className('android.widget.FrameLayout').findOne(MAX)
-  if (root) {
-    // @ts-ignore
-    let target = root.child(0) // LinearLayout
-      .child(0) // FrameLayout
-      .child(0) // LinearLayout
-      .child(0) // FrameLayout
-      .child(0) // RelativeLayout
-      .child(0) // LinearLayout
-      .child(0) // FrameLayout
-      .child(0) // android.view.ViewGroup
-      .child(0) // android.view.ViewGroup
-      .child(0) // android.view.ViewGroup
-      .child(0) // ScrollView
-      .child(0) // android.view.ViewGroup
-      .child(0) // android.view.ViewGroup
-      .child(0) // android.view.ViewGroup
-      .child(0) // android.view.ViewGroup
-      .child(childIndex)
-
-    if (!target) throw new Error('find entry fail: ' + childIndex)
-    return target
-  }
+  let el = textMatches(/^(签到领京豆|.*已连续签到.*|.*已连签.*)$/).findOne(MAX);
+  if (el == null) throw new Error('“签到领京豆”或“已连续签到”按钮不存在，无法继续找到入口');
+  // @ts-ignore
+  let c = el.parent().parent().parent().parent();
+  if (!c) throw new Error('未找到容器');
+  let len = c.childCount();
+  let i = len + childIndex;
+  return c.child(i);
 }
 
 export default app;
