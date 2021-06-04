@@ -157,7 +157,7 @@ app.add('点击我的', (next) => {
       clickControl(btn)
       findAndClickIt(idMatches(/.*(btn_go|bt_go).*/))
       sleep(1500)
-      let el = text('我的任务').findOne(1500)
+      let el = text('去完成').findOne(1500)
       if (el == null) {
         try {
           findAndClickIt(desc('Navigate up'))
@@ -174,8 +174,10 @@ app.add('点击我的', (next) => {
     let no = listItem.findOne(textEndsWith('未达成'));
     if (no == null) {
       clickControl(listItem);
-      let flag = textStartsWith('领取失败').findOnce()
-      findAndClickIt(className('android.view.View').textMatches(/^(.*确定.*|.*我知道了.*)$/));
+      sleep(200);
+      let flag = textStartsWith('领取失败').findOnce();
+      let el = textMatches(/^(.*确定.*|.*我知道了.*)$/).findOnce();
+      if (el) clickControl(el);
       if (flag) break
       sleep(1000);
       listItem = getNextBag();
@@ -192,7 +194,8 @@ app.add('点击我的', (next) => {
     if (t == null) return null;
     let p = t.parent();
     if (p == null) return null;
-    return nextSibling(p)
+    // @ts-ignore
+    return nextSibling(p).child(0)
   }
 }).add('完成', (next) => {
   output('张大妈签到完成');
