@@ -11,11 +11,9 @@ app.add('点击通讯录', (next) => {
   findAndClickIt(text('公众号'));
   next();
 }).add('点击搜索', (next) => {
-  let el = className('android.support.v7.widget.LinearLayoutCompat').findOne(MAX);
+  let el = desc('搜索').findOne(MAX);
   if (el == null) throw new Error();
-  let search = el.child(0);
-  if (search == null) throw new Error();
-  clickControl(search);
+  clickControl(el, true);
   next();
 }).add('输入老板电器', (next) => {
   let el = text('搜索').findOne(1000);
