@@ -122,7 +122,7 @@ app.add('点击我的', (next) => {
   function handleTask (i, getTask) {
     let title = /** @type {UiObject} */(getTask(i).findOne(idEndsWith('tv_title'))).text()
     let btn
-    if (/发布|晒|达人推荐|关注|爆料任务|原创|创作|邀请|幸运屋|完善|栏目/.test(title)) return
+    if (/发布|晒|达人推荐|关注|爆料任务|原创|创作|邀请|幸运屋|完善|栏目|长文/.test(title)) return
     while ((btn = getTask(i).findOne(text('去完成'))) && (count[title] || 0) < 7) {
       clickControl(btn)
       let desc = /** @type {UiObject} */(idEndsWith('tv_desc').findOne(MAX)).text()
