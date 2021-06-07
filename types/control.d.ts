@@ -58,6 +58,7 @@ declare function clickable(b?: boolean): UiSelector
 declare function longClickable(b?: boolean): UiSelector
 declare function checkable(b?: boolean): UiSelector
 declare function multiLine(b?: boolean): UiSelector
+declare function visibleToUser(b?: boolean): UiSelector
 
 
 interface UiSelector {
@@ -130,6 +131,8 @@ interface UiSelector {
   editable(b?: boolean): UiSelector
 
   multiLine(b?: boolean): UiSelector
+
+  visibleToUser(b?: boolean): UiSelector
 
   depth(x: number): UiSelector
 

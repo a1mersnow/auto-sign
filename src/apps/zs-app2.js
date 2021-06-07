@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling} from '../util';
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling, log} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('招商银行App', 'cmb.pb', () => text('首页').exists && text('理财').exists() && text('我的').exists());
@@ -68,6 +68,46 @@ app.add('点击我的', (next) => {
     clickControl(p);
   }
   next();
+}).add('答题', (next) => {
+  let answer = storages.create('zs-q').get('zsyh').split('-')
+  if (!answer) return next();
+  backward();
+  let entry = descStartsWith("index','003003','','003','1','JFSY002'").findOne(MAX)
+  if (entry) {
+    clickControl(entry, true)
+    sleep(3000)
+
+    while (handleCase()) {
+      sleep(1000)
+    }
+  }
+  next();
+
+  function handleCase () {
+    let no = textMatches(/^\d\/\d$/).visibleToUser(true).findOnce()
+    if (no) {
+      let m = /^(\d)\/\d$/.exec(no.text())
+      // @ts-ignore
+      let c = answer[m[1] - 1]
+      // @ts-ignore
+      log('题号:' + m[1] + '; 答案:' + c)
+      let op = textMatches(c + '.').findOnce()
+      if (op) clickControl(op, true)
+      return true
+    } else {
+      let tomo = text('请明日再来').findOnce()
+      if (tomo) {
+        return false
+      }
+      let daily = textContains('每日答题').findOnce()
+      if (daily) {
+        clickControl(daily, true)
+        return true
+      } else {
+        return false
+      }
+    }
+  }
 });
 
 export default app;

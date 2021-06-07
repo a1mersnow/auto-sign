@@ -84,8 +84,16 @@ app.add('关闭升级提示', next => {
   sleep(300);
   clickControl(signBtn, true);
   backward();
+  sleep(1000);
   next();
-}).add('输出积分', (next) => {
+})/*.add('答题', next => {
+  let t = text('积分').findOne(MAX);
+  if (t) {
+    clickControl(t, true)
+    sleep(500)
+  }
+  next();
+})*/.add('输出积分', (next) => {
   let t = text('积分').findOne(MAX);
   if (t == null) throw new Error('积分二字未找到');
   let score = sibling(t, 0);

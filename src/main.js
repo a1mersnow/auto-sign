@@ -1,4 +1,5 @@
 import init from './init.js';
+import zsQ from './apps/zs-q';
 import oneplus from './apps/oneplus';
 import jdjr from './apps/jdjr';
 import jdmall from './apps/jdmall';
@@ -70,6 +71,7 @@ function main () {
 function oldProcess () {
   // 所有模块
   let all = [
+    zsQ,
     oneplus,
     jdjr,
     jdmall,
@@ -88,7 +90,7 @@ function oldProcess () {
   let st = storages.create('pick');
   if (!st.get('pick')) {
     // select of user
-    let sofu = dialogs.multiChoice('你尚未选择过所需模块，请选择（默认全选，如需重新选择，请执行clear脚本）：', ['一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招行支付宝', '招商银行', '掌上生活', '微信老板电器', '云闪付'], idxs)
+    let sofu = dialogs.multiChoice('你尚未选择过所需模块，请选择（默认全选，如需重新选择，请执行clear脚本）：', ['招行答题', '一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招行支付宝', '招商银行', '掌上生活', '微信老板电器', '云闪付'], idxs)
     if (sofu.length === 0) {
       toast('请至少选择一个模块')
     } else {
