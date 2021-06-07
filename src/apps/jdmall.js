@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, output, getNumberFromSelector, MAX, sibling, log} from '../util';
+import {findAndClickIt, clickControl, backward, output, getNumberFromSelector, MAX, sibling, log, scrollU} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('京东购物', 'com.jingdong.app.mall', 'com.jingdong.app.mall.MainFrameActivity');
@@ -68,10 +68,66 @@ app.add('点击我的', (next) => {
   let el = findEntry(-1);
   if (el) {
     clickControl(el, true);
-    sleep(4000);
+    sleep(3000);
+
     click(device.width / 2, device.height * 8 / 9);
-    sleep(2000);
-    findAndClickIt(desc('返回'));
+    findAndClickIt(text('Close'));
+
+    openTasks()
+
+    doTasks();
+
+    let t
+    while ((t = textMatches(/^.*摇一摇\s*?有惊喜.*$/).findOnce())) {
+      clickControl(t, true)
+      sleep(1000)
+      findAndClickIt(text('Close'))
+      sleep(300)
+    }
+
+    closePage()
+  }
+
+  function doTasks () {
+    let el = text('浏览活动').findOnce()
+    if (el) {
+      scrollU(300, device.height * 3 / 4, 300)
+      sleep(300)
+      scrollU(300, device.height * 3 / 4, 300)
+      sleep(300)
+      scrollU(300, device.height * 3 / 4, 300)
+      sleep(300)
+      scrollU(300, device.height * 3 / 4, 300)
+      sleep(300)
+      scrollU(300, device.height * 3 / 4, 300)
+      let t
+      while ((t = text('浏览').findOnce())) {
+        t.click()
+        sleep(2000)
+        backward()
+        sleep(1000)
+      }
+      let c = text('Close').findOnce()
+      if (c) clickControl(c, true)
+    }
+  }
+
+  function openTasks () {
+    // @ts-ignore
+    let root = text('天天买爆品').findOne(MAX).parent()
+    if (root) {
+      let z = root.child(1)
+      if (z) {
+        clickControl(z, true)
+        sleep(1000)
+      }
+    }
+  }
+
+  function closePage () {
+    let el = desc('关闭页面').findOnce()
+    if (el == null) el = desc('返回').findOnce()
+    if (el) clickControl(el)
   }
 
   next();
