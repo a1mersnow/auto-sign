@@ -67,6 +67,7 @@ app.add('点击我的', (next) => {
     if (!p) throw new Error('B');
     clickControl(p);
   }
+  backward();
   next();
 }).add('答题', (next) => {
   let answer = storages.create('zs-q').get('zsyh') && storages.create('zs-q').get('zsyh').split('-')
@@ -74,7 +75,6 @@ app.add('点击我的', (next) => {
     log('没找到答案')
     return next();
   }
-  backward();
   let entry = descStartsWith("index','003003','','003','1','JFSY002'").findOne(MAX)
   if (entry) {
     clickControl(entry, true)
