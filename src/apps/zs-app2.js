@@ -87,25 +87,25 @@ app.add('点击我的', (next) => {
   next();
 
   function handleCase () {
-    let no = textMatches(/^\d\/\d$/).find()
-    if (no.length) {
-      let ln = no[no.length - 1]
-      let m = /^(\d)\/\d$/.exec(ln.text())
-      // @ts-ignore
-      let c = answer[m[1] - 1]
-      // @ts-ignore
-      log('题号:' + m[1] + '; 答案:' + c)
-      let op = textMatches(c + '.').findOnce()
-      if (op) clickControl(op, true)
+    let tomo = text('请明日再来').findOnce()
+    if (tomo) {
+      return false
+    }
+    let succ = text('查看积分').findOnce()
+    if (succ) {
+      return false
+    }
+    let daily = textContains('每日答题').findOnce()
+    if (daily) {
+      clickControl(daily, true)
       return true
     } else {
-      let tomo = text('请明日再来').findOnce()
-      if (tomo) {
-        return false
-      }
-      let daily = textContains('每日答题').findOnce()
-      if (daily) {
-        clickControl(daily, true)
+      let index = storages.create('zs-q').get('index') || 0
+      storages.create('zs-q').put('index', index + 1)
+      let a = answer[index]
+      let op = textMatches(a + '.').findOnce()
+      if (op) {
+        clickControl(op, true)
         return true
       } else {
         return false
