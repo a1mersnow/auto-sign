@@ -26,6 +26,7 @@ app.add('点击发现', (next) => {
   next();
 }).add('等广告', (next) => {
   sleep(8000);
+  storages.remove('zs-q');
   next();
 }).add('获取招商银行每日答题的答案', (next) => {
   let t = textMatches(/^.*\d{1,2}\.\d{1,2}\s*?每日答题.*$/).findOne(MAX);
@@ -38,7 +39,6 @@ app.add('点击发现', (next) => {
         let m = /^.*答案：([A-Z-]+).*$/.exec(answer);
         let mm = m && m[1];
         if (mm) {
-          storages.remove('zs-q')
           storages.create('zs-q').put('zsyh', mm);
           log('招商银行答案：' + mm);
         }
@@ -61,7 +61,6 @@ app.add('点击发现', (next) => {
         let m = /^.*答案：([A-Z-]+).*$/.exec(answer);
         let mm = m && m[1];
         if (mm) {
-          storages.remove('zs-q')
           storages.create('zs-q').put('zssh', mm);
           log('掌上生活答案：' + mm);
         }

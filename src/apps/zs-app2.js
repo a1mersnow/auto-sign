@@ -69,7 +69,7 @@ app.add('点击我的', (next) => {
   }
   next();
 }).add('答题', (next) => {
-  let answer = storages.create('zs-q').get('zsyh').split('-')
+  let answer = storages.create('zs-q').get('zsyh') && storages.create('zs-q').get('zsyh').split('-')
   if (!answer) {
     log('没找到答案')
     return next();

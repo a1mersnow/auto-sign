@@ -98,7 +98,7 @@ app.add('关闭升级提示', next => {
     clickControl(t, true)
     sleep(2000)
     clickQAEntry()
-    log('首次进入可能会很久，我也不知道啥时候能进去，所以就多等一会儿...')
+    log('等20s...')
     sleep(20000)
     click(device.width / 2, device.height / 3)
     sleep(1000)
