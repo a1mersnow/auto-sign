@@ -97,18 +97,20 @@ app.add('关闭升级提示', next => {
   if (t) {
     clickControl(t, true)
     sleep(2000)
-    clickQAEntry()
-    log('等20s...')
-    sleep(20000)
-    click(device.width / 2, device.height / 3)
-    sleep(1000)
-    checkIt(answer)
-    click(device.width / 2, device.height - 30)
-    sleep(1000)
-    confirmCheck()
+    if (clickQAEntry()) {
+      log('等20s...')
+      sleep(20000)
+      click(device.width / 2, device.height / 3)
+      sleep(1000)
+      checkIt(answer)
+      click(device.width / 2, device.height - 30)
+      sleep(1000)
+      confirmCheck()
+    }
   }
   next();
-}).add('输出积分', (next) => {
+}).add('输出积分', (next, tools) => {
+  tools.backHome()
   let t = text('积分').findOne(MAX);
   if (t == null) throw new Error('积分二字未找到');
   let score = sibling(t, 0);
@@ -197,9 +199,14 @@ function clickQAEntry () {
   // @ts-ignore
   let matchResult = images.matchTemplate(img, j, { max: 1, threshold: 0.6 })
   // @ts-ignore
-  let p = matchResult.matches[0].point
-  click(p.x + 10, p.y + 10)
-  sleep(500)
+  let p = matchResult.matches[0] && matchResult.matches[0].point
+  if (p) {
+    click(p.x + 10, p.y + 10)
+    sleep(500)
+    return true
+  } else {
+    return false
+  }
 }
 
 function confirmCheck () {
@@ -210,8 +217,8 @@ function confirmCheck () {
   // @ts-ignore
   let matchResult = images.matchTemplate(img, j, { max: 1 })
   // @ts-ignore
-  let p = matchResult.matches[0].point
-  click(p.x + 10, p.y + 10)
+  let p = matchResult.matches[0] && matchResult.matches[0].point
+  if (p) click(p.x + 10, p.y + 10)
   sleep(500)
 }
 
