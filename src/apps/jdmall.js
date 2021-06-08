@@ -68,7 +68,7 @@ app.add('点击我的', (next) => {
   let el = findEntry(-1);
   if (el) {
     clickControl(el, true);
-    sleep(3000);
+    sleep(8000);
 
     click(device.width / 2, device.height * 8 / 9);
     findAndClickIt(text('Close'));

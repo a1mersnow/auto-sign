@@ -70,7 +70,10 @@ app.add('点击我的', (next) => {
   next();
 }).add('答题', (next) => {
   let answer = storages.create('zs-q').get('zsyh').split('-')
-  if (!answer) return next();
+  if (!answer) {
+    log('没找到答案')
+    return next();
+  }
   backward();
   let entry = descStartsWith("index','003003','','003','1','JFSY002'").findOne(MAX)
   if (entry) {
@@ -84,9 +87,10 @@ app.add('点击我的', (next) => {
   next();
 
   function handleCase () {
-    let no = textMatches(/^\d\/\d$/).visibleToUser(true).findOnce()
-    if (no) {
-      let m = /^(\d)\/\d$/.exec(no.text())
+    let no = textMatches(/^\d\/\d$/).find()
+    if (no.length) {
+      let ln = no[no.length - 1]
+      let m = /^(\d)\/\d$/.exec(ln.text())
       // @ts-ignore
       let c = answer[m[1] - 1]
       // @ts-ignore

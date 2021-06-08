@@ -25,10 +25,10 @@ app.add('点击发现', (next) => {
   findAndClickIt(text('招财积分猫').className('android.view.View'));
   next();
 }).add('等广告', (next) => {
-  sleep(6000);
+  sleep(8000);
   next();
 }).add('获取招商银行每日答题的答案', (next) => {
-  let t = textMatches(/^.*\d{1,2}\.\d{1,2}\s*?每日答题.*$/).findOnce();
+  let t = textMatches(/^.*\d{1,2}\.\d{1,2}\s*?每日答题.*$/).findOne(MAX);
   if (t) {
     let c = t.parent()
     if (c) {
@@ -46,8 +46,8 @@ app.add('点击发现', (next) => {
     }
   }
   next()
-})/*.add('获取掌上生活每日答题的答案', (next) => {
-  let tab = text('掌上答案').findOnce();
+}).add('获取掌上生活每日答题的答案', (next) => {
+  let tab = text('掌上答案').findOne(MAX);
   if (tab == null) throw new Error('掌上生活tab未找到')
   clickControl(tab);
   sleep(500);
@@ -69,6 +69,6 @@ app.add('点击发现', (next) => {
     }
   }
   next()
-})*/;
+});
 
 export default app;

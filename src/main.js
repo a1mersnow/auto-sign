@@ -70,35 +70,56 @@ function main () {
 
 function oldProcess () {
   // 所有模块
+  /** @type {[import('./app').Application, string][]} */
   let all = [
-    zsQ,
-    oneplus,
-    jdjr,
-    jdmall,
-    zdm,
-    zsWx,
-    zsZfb,
-    zsApp2,
-    zsApp,
-    robam,
-    ysf,
+    [zsQ, 'zsQ'],
+    [oneplus, 'oneplus'],
+    [jdjr, 'jdjr'],
+    [jdmall, 'jdmall'],
+    [zdm, 'zdm'],
+    [zsWx, 'zsWx'],
+    [zsZfb, 'zsZfb'],
+    [zsApp2, 'zsApp2'],
+    [zsApp, 'zsApp'],
+    [robam, 'robam'],
+    [ysf, 'ysf'],
   ]
-
-  let idxs = all.map(function (_, i) { return i })
 
   // 用户是否设置过模块
   let st = storages.create('pick');
-  if (!st.get('pick')) {
+  if (!isValidStore()) {
     // select of user
-    let sofu = dialogs.multiChoice('你尚未选择过所需模块，请选择（默认全选，如需重新选择，请执行clear脚本）：', ['招行答题', '一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招行支付宝', '招商银行', '掌上生活', '微信老板电器', '云闪付'], idxs)
+    let sofu = dialogs.multiChoice('请选择所需模块（如需重新选择，请执行clear脚本）：', ['招行答题', '一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招行支付宝', '招商银行', '掌上生活', '微信老板电器', '云闪付'], getDefaultOptions())
     if (sofu.length === 0) {
       toast('请至少选择一个模块')
     } else {
-      st.put('pick', sofu)
-      let need = sofu.map(function (i) { return all[i] })
+      let fns = all.filter(function (_, index) {
+        return sofu.indexOf(index) > -1
+      }).map(function (item) {
+        return item[1]
+      })
+      st.put('pick', fns)
+      let need = sofu.map(function (i) { return all[i][0] })
       init(need)
     }
   } else {
-    init(/** @type {number[]} */(st.get('pick', idxs)).map(function (i) { return all[i] }))
+    init(all.filter(function (item) {
+      let u = /** @type {string[]} */(st.get('pick', all.map(function (x) { return x[1] })));
+      return u.indexOf(item[1]) > -1
+    }).map(function (item) {
+      return item[0]
+    }))
+  }
+
+  function isValidStore () {
+    return st.get('pick') && st.get('pick')[0] && typeof st.get('pick')[0] !== 'number'
+  }
+
+  function getDefaultOptions () {
+    if (isValidStore()) {
+      return st.get('pick')
+    } else {
+      return all.map(function (_, i) { return i })
+    }
   }
 }

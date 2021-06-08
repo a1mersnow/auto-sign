@@ -307,7 +307,7 @@ declare namespace images {
   function detectsColor(image: Image, color: number | string, x: number, y: number, threshold?: number, algorithm?: ColorMatchingAlgorithm): boolean
   function findImage(img: Image, template: Image, options?: FindImageOptions): Point | null
   function findImageInRegion(img: Image, template: Image, x: number, y: number, width?: number, height?: number, threshold?: number): Point | null
-  function matchTemplate(img: Image, template: Image, options: MatchTemplateOptions): MatchingResult
+  function matchTemplate(img: Image, template: Image, options?: MatchTemplateOptions): MatchingResult
 }
 
 declare const captureScreen: typeof images.captureScreen
