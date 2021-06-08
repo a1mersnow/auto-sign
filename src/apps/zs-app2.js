@@ -6,7 +6,7 @@ app.add('点击我的', (next) => {
   findAndClickIt(className('android.widget.TextView').text('我的'));
   next();
 }).add('判断登录状态', (next) => {
-  if (className('android.view.View').text('账户总览').exists()) {
+  if (text('账户总览').exists()) {
     next('点击积分');
   } else {
     backward();
