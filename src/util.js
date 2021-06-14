@@ -1,5 +1,5 @@
 // 最大搜索时间
-const MAX = 10000;
+const MAX = 8000;
 
 /**
  *
@@ -39,6 +39,8 @@ function findAndClickIt(selector, max, locationFlag) {
  * @param {(() => any) | void} goThruGuide
  */
 function launchPackage (packageName, condition, quitCondition, clickCenter, closePopup, goThruGuide) {
+  app.launchPackage('org.autojs.autojs')
+  sleep(1000)
   let resolvedCondition;
   if (typeof condition === 'string') {
     resolvedCondition = () => currentActivity() === condition;

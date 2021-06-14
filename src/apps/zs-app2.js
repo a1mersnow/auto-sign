@@ -67,6 +67,8 @@ app.add('点击我的', (next) => {
     if (!p) throw new Error('B');
     clickControl(p);
   }
+  let m = text('开心收下').findOne(2000)
+  if (m) clickControl(m, true)
   backward();
   next();
 }).add('答题', (next) => {
