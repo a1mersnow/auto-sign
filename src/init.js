@@ -13,12 +13,6 @@ function main(apps) {
   // 清理剪贴板，防止张大妈等app读取剪贴板蹦出弹窗
   setClip('cleared by autojs');
 
-  // 打开录屏权限，autojs 以图找图
-  while (!images.requestScreenCapture()) {
-    sleep(5000)
-  }
-  sleep(1000)
-
   // 监听用户操作停止脚本运行
   engines.execScript(listenUserExit.name, listenUserExit.name  + '();\n' + listenUserExit.toString());
   function listenUserExit() {

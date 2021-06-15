@@ -86,6 +86,32 @@ app.add('关闭升级提示', next => {
   backward();
   sleep(1000);
   next();
+}).add('答题', next => {
+  /** @type string */
+  let answer = storages.create('zs-q').get('zssh')
+  if (!answer) {
+    log('没找到答案')
+    return next();
+  }
+  let t = text('积分').findOne(MAX);
+  if (t) {
+    clickControl(t, true)
+    sleep(2000)
+    if (clickQAEntry()) {
+      log('等20s...')
+      sleep(20000)
+      click(device.width / 2, device.height / 3)
+      let box = className('android.webkit.WebView').text('积分答题').findOne(1000);
+      if (!box) return
+      let fix = box.bounds().top
+      sleep(1000)
+      checkIt(answer, fix)
+      click(device.width / 2, device.height - 30)
+      sleep(1000)
+      confirmCheck(fix)
+    }
+  }
+  next();
 }).add('输出积分', (next, tools) => {
   tools.backHome()
   let t = text('积分').findOne(MAX);
@@ -127,6 +153,40 @@ function getPoint(rect, number) {
     left + ((2 * xc) + 1) * xunit,
     rect.top + ((2 * yc) + 1) * yunit
   ]
+}
+
+function clickQAEntry () {
+  try {
+    let c = idEndsWith('mall_sec_page_recommend_top_scrolling_view').findOne(2000)
+    // @ts-ignore
+    let el = c.child(6).child(0).child(1)
+    if (el) clickControl(el, true)
+    return !!el
+  } catch (e) {
+    return false
+  }
+}
+
+/**
+ * @param { string } answer
+ * @param { number } fix
+ */
+function checkIt (answer, fix) {
+  /** @type {{[index: string]: number}} */
+  let map = { 'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4 };
+  let index = map[answer];
+  let x = device.width * 0.8972;
+  let y = fix + index * 0.1111111 * device.width + 0.925 * device.width - 199.571;
+  click(x, y);
+  sleep(1000);
+}
+
+/**
+ * @param { number } fix
+ */
+function confirmCheck (fix) {
+  click(device.width * 3 / 4, fix + 0.588 * (device.height - fix));
+  sleep(1000)
 }
 
 export default app;
