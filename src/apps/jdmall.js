@@ -71,7 +71,7 @@ app.add('点击我的', (next) => {
     sleep(8000);
 
     click(device.width / 2, device.height * 8 / 9);
-    findAndClickIt(text('Close'));
+    closeDialog()
 
     openTasks()
 
@@ -81,11 +81,18 @@ app.add('点击我的', (next) => {
     while ((t = textMatches(/^.*摇一摇\s*?有惊喜.*$/).findOnce())) {
       clickControl(t, true)
       sleep(1000)
-      findAndClickIt(text('Close'))
+      closeDialog()
       sleep(300)
     }
 
     closePage()
+  }
+
+  function closeDialog () {
+    let close = text('Close').findOnce()
+    if (close) clickControl(close, true)
+    let more = textStartsWith('浏览其他').findOnce()
+    if (more) clickControl(more, true)
   }
 
   function doTasks () {
