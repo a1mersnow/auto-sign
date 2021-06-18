@@ -105,7 +105,7 @@ app.add('关闭升级提示', next => {
       if (!box) return
       let fix = box.bounds().top
       sleep(1000)
-      checkIt(answer, fix)
+      checkIt(answer)
       click(device.width / 2, device.height - 30)
       sleep(1000)
       confirmCheck(fix)
@@ -168,17 +168,31 @@ function clickQAEntry () {
 }
 
 /**
- * @param { string } answer
- * @param { number } fix
+ * @param {string} answer
  */
-function checkIt (answer, fix) {
+ function checkIt (answer) {
   /** @type {{[index: string]: number}} */
-  let map = { 'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4 };
-  let index = map[answer];
-  let x = device.width * 0.8972;
-  let y = fix + index * 0.1111111 * device.width + 0.925 * device.width - 199.571;
-  click(x, y);
-  sleep(1000);
+  let map = {
+    'A': 0,
+    'B': 1,
+    'C': 2,
+    'D': 3,
+  }
+  let index = map[answer]
+  let capture = images.captureScreen()
+
+  let firstPoint = images.findColorEquals(capture, '#1070e9', 0, 0, device.width, device.height * 3 / 4);
+  if (!firstPoint) return
+  let secondPoint = images.findColorEquals(capture, '#1070e9', 0, firstPoint.y + 115 / 1080 * device.width, device.width, device.width * 122 / 1080)
+  if (!secondPoint) return
+  let thirdPoint = images.findColorEquals(capture, '#1070e9', 0, secondPoint.y + 115 / 1080 * device.width, device.width, device.width * 122 / 1080)
+  if (!thirdPoint) return
+  let fourthPoint = images.findColorEquals(capture, '#1070e9', 0, thirdPoint.y + 115 / 1080 * device.width, device.width, device.width * 122 / 1080)
+  if (!fourthPoint) return
+  let options = [firstPoint, secondPoint, thirdPoint, fourthPoint];
+  let answerPoint = options[index]
+  click(answerPoint.x, answerPoint.y);
+  sleep(1000)
 }
 
 /**
