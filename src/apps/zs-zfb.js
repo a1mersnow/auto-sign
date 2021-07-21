@@ -2,7 +2,7 @@ import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibl
 import {createApp} from '../app';
 
 let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', () => {
-  return text('首页').exists() && text('我的').exists();
+  return text('我的').exists();
 }, () => idEndsWith('registerAccount').text('注册账号').exists(), undefined, () => {
   const el = text('稍后再说').findOne(MAX)
   if (el != null) clickControl(el)
