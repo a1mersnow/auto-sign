@@ -42,6 +42,7 @@ app.add('点击通讯录', (next) => {
   let el3 = el2.child(1)
   if (!el3) throw new Error('target not found')
   clickControl(el3)
+  sleep(3000)
   next();
 });
 
