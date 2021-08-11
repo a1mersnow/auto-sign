@@ -122,8 +122,8 @@ app.add('点击我的', (next) => {
   function handleTask (i, getTask) {
     let title = /** @type {UiObject} */(getTask(i).findOne(idEndsWith('tv_title'))).text()
     let btn
-    if (/发布|晒|达人推荐|关注|爆料任务|原创|创作|邀请|幸运屋|完善|栏目|长文/.test(title)) return
-    while ((btn = getTask(i).findOne(text('去完成'))) && (count[title] || 0) < 7) {
+    if (/发布|晒|达人推荐|关注|爆料|原创|创作|邀请|幸运屋|完善|栏目|长文/.test(title)) return
+    while ((btn = getTask(i).findOne(text('去完成'))) && (count[title] || 0) < 3) {
       clickControl(btn)
       let desc = /** @type {UiObject} */(idEndsWith('tv_desc').findOne(MAX)).text()
       let longFlag = /10S/i.test(desc)
@@ -141,16 +141,16 @@ app.add('点击我的', (next) => {
 
   function roundDo () {
     // @ts-ignore
-    let tasks = () => idEndsWith('rc_list').findOne(MAX).children()
+    let tasks = () => idEndsWith('rv_task_list').findOne(MAX).children()
     for (let i = 0; i < tasks().length; ++i) {
       // @ts-ignore
-      let getTask = x => /** @type {UiObject} */(idEndsWith('rc_list').findOnce()).children().get(x)
+      let getTask = x => /** @type {UiObject} */(idEndsWith('rv_task_list').findOnce()).children().get(x)
       handleTask(i, getTask)
     }
   }
 
   function roundBonus () {
-    let container = idEndsWith('rc_list').findOne(MAX)
+    let container = idEndsWith('rv_task_list').findOne(MAX)
     if (!container) throw new Error('未找到任务列表')
     let btn
     while ((btn = textMatches(/领奖励|领取大奖/).findOne(1500))) {
