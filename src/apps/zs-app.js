@@ -76,6 +76,7 @@ app.add('关闭升级提示', next => {
   inputPassword(t, password);
   next();
 }).add('点击签到按钮', (next) => {
+  sleep(5000)
   let signBtn = className('android.view.View').text("签到").findOne(MAX);
   if (signBtn) {
     clickControl(signBtn, true);
