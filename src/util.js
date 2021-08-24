@@ -51,12 +51,7 @@ function launchPackage (packageName, condition, quitCondition, clickCenter, clos
   sleep(1000);
   let b = app.launchPackage(packageName);
   if (!b) throw new Error('app启动失败');
-  // app双开处理
-  let resolver = id('android:id/resolver_list').findOne(1000);
-  if (resolver) {
-    let apps = resolver.find(className('android.widget.LinearLayout').clickable());
-    clickControl(apps[0]);
-  }
+  handleDualCase()
   // app更新可能重新进入引导页
   let leap = text('跳过').findOnce();
   if (leap) {
@@ -88,12 +83,7 @@ function launchPackage (packageName, condition, quitCondition, clickCenter, clos
     }
     b = app.launchPackage(packageName)
     if (!b) throw new Error('app启动失败')
-    // app双开处理
-    resolver = id('android:id/resolver_list').findOne(1000);
-    if (resolver) {
-      let apps = resolver.find(className('android.widget.LinearLayout').clickable());
-      clickControl(apps[0]);
-    }
+    handleDualCase()
   }
   index = 5;
   while (!resolvedQuitCondition() && !resolvedCondition() && index > 0) {
@@ -108,6 +98,25 @@ function launchPackage (packageName, condition, quitCondition, clickCenter, clos
   }
   if (closePopup) {
     closePopup()
+  }
+}
+
+/**
+ * 双开处理
+ */
+export function handleDualCase () {
+  sleep(1000)
+  let shadow = textMatches(/^(.+)[(（]分身[)）]$/).findOnce()
+  if (shadow) {
+    let txt = shadow.text();
+    let m = /^(.+)[(（]分身[)）]$/.exec(txt)
+    if (m && m[1]) {
+      let real = text(m[1]).findOnce()
+      if (real) {
+        clickControl(real, true)
+        sleep(1000)
+      }
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import {findAndClickIt, clickControl, backward, getNumberFromSelector, output, MAX, sibling, scrollU, scrollD, nextSibling, log} from '../util';
+import {findAndClickIt, clickControl, backward, getNumberFromSelector, output, MAX, sibling, scrollU, scrollD, nextSibling, log, handleDualCase} from '../util';
 import {createApp} from '../app';
 
 let app = createApp('张大妈', 'com.smzdm.client.android', () => text('首页').exists() && text('我的').exists(), undefined, undefined, () => {
@@ -55,6 +55,7 @@ app.add('点击我的', (next) => {
       clickControl(yes);
       sleep(2000);
     } else {
+      handleDualCase();
       let fileHelper = text('文件传输助手').findOnce()
       if (fileHelper) {
         clickControl(fileHelper)
