@@ -117,6 +117,13 @@ export function handleDualCase () {
         sleep(1000)
       }
     }
+  } else {
+    // 兼容无法为分身改名的手机
+    let els = text('微信').find()
+    if (els.length === 2) {
+      clickControl(els.get(0), true)
+      sleep(1000)
+    }
   }
 }
 
