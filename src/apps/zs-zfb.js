@@ -140,7 +140,10 @@ app.add('点击消息', (next) => {
   }
   next();
 }).add('点击签到按钮', (next) => {
-  findAndClickIt(text('签到按钮图片'));
+  let el = text('签到按钮图片').findOnce()
+  if (el) {
+    clickControl(el);
+  }
   next();
 });
 

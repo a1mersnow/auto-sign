@@ -9,7 +9,12 @@ app.add('点击我的', (next) => {
   if (text('账户总览').exists()) {
     next('点击积分');
   } else {
-    backward();
+    let cancel = text('取消').findOnce()
+    if (cancel) {
+      clickControl(cancel)
+    } else {
+      backward();
+    }
     next();
   }
 }).add('判断登录方式', (next) => {
