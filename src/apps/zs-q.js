@@ -7,9 +7,6 @@ let app = createApp('招财积分猫', 'com.tencent.mm', () => {
 app.add('点击发现', (next) => {
   findAndClickIt(text('发现'));
   next();
-}).add('点击小程序', (next) => {
-  findAndClickIt(text('小程序'));
-  next();
 }).add('点击搜索', (next) => {
   let el = desc('搜索').findOne(MAX);
   if (el == null) throw new Error();
@@ -22,7 +19,7 @@ app.add('点击发现', (next) => {
   el.setText('招财积分猫');
   next();
 }).add('点击搜索结果中的招财积分猫', (next) => {
-  findAndClickIt(text('招财积分猫').className('android.view.View'));
+  findAndClickIt(text('招财积分猫').className('android.widget.TextView'));
   next();
 }).add('等广告', (next) => {
   sleep(8000);
