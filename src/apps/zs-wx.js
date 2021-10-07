@@ -31,19 +31,14 @@ app.add('点击通讯录', (next) => {
   findAndClickIt(className('android.widget.TextView').textMatches(/.*签到领积分.*/));
   next();
 }).add('点击签到按钮', (next) => {
-  let el = text('签到背景图').findOne(MAX)
-  if (!el) {
-    throw new Error('未找到背景图')
-  }
-  let btnwrapper = sibling(el, 4)
-  if (!btnwrapper) {
-    throw new Error('未找到按钮块')
-  }
-  let btn = btnwrapper.child(0)
-  if (!btn) {
-    throw new Error('未找到按钮')
-  }
-  clickControl(btn, true)
+  click(device.width / 2, 700)
+  click(device.width / 2, 725)
+  click(device.width / 2, 750)
+  click(device.width / 2, 775)
+  click(device.width / 2, 800)
+  click(device.width / 2, 825)
+  click(device.width / 2, 850)
+  sleep(2000)
   next();
 });
 
