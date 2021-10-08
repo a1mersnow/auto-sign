@@ -31,6 +31,7 @@ app.add('点击通讯录', (next) => {
   findAndClickIt(className('android.widget.TextView').textMatches(/.*签到领积分.*/));
   next();
 }).add('点击签到按钮', (next) => {
+  sleep(5000)
   click(device.width / 2, 700)
   click(device.width / 2, 725)
   click(device.width / 2, 750)
