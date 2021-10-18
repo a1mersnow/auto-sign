@@ -11,7 +11,7 @@ app.add('点击我的', (next) => {
   } else {
     let cancel = text('取消').findOnce()
     if (cancel) {
-      clickControl(cancel)
+      clickControl(cancel, true)
     } else {
       backward();
     }
@@ -21,8 +21,6 @@ app.add('点击我的', (next) => {
   if (idEndsWith('vGestureContentView').exists()) {
     next();
   } else {
-    let t = className('android.widget.TextView').text('点击进行指纹解锁').findOne(MAX);
-    if (t == null) return next();
     let m = className('android.widget.TextView').text('更多').findOne(MAX);
     if (m == null) throw new Error('没有找到更多');
     clickControl(m);

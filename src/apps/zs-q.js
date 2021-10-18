@@ -3,7 +3,7 @@ import {createApp} from '../app';
 
 let app = createApp('招财积分猫', 'com.tencent.mm', () => {
   return className('android.widget.TextView').text('微信').exists() && className('android.widget.TextView').text('通讯录').exists();
-}, undefined, false);
+}, undefined);
 app.add('点击发现', (next) => {
   findAndClickIt(text('发现'));
   next();

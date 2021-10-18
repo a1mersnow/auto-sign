@@ -34,11 +34,10 @@ function findAndClickIt(selector, max, locationFlag) {
  * @param {String} packageName
  * @param {string | (() => boolean)} condition
  * @param {(() => boolean) | void} quitCondition
- * @param {boolean} clickCenter]
  * @param {(() => any) | void} closePopup
  * @param {(() => any) | void} goThruGuide
  */
-function launchPackage (packageName, condition, quitCondition, clickCenter, closePopup, goThruGuide) {
+function launchPackage (packageName, condition, quitCondition, closePopup, goThruGuide) {
   app.launchPackage('org.autojs.autojs')
   sleep(1000)
   let resolvedCondition;

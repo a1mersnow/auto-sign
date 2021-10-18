@@ -3,7 +3,7 @@ import {createApp} from '../app';
 
 let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () => {
   return text('我的').exists() && text('金融').exists();
-}, undefined, undefined, () => {
+}, undefined, () => {
   let el = idEndsWith('tv_cancel').findOnce()
   if (el) clickControl(el)
 }, () => {

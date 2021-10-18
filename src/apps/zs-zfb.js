@@ -3,7 +3,7 @@ import {createApp} from '../app';
 
 let app = createApp('招行支付宝', 'com.eg.android.AlipayGphone', () => {
   return text('我的').exists();
-}, () => idEndsWith('registerAccount').text('注册账号').exists(), undefined, () => {
+}, () => idEndsWith('registerAccount').text('注册账号').exists(), () => {
   const el = text('稍后再说').findOne(MAX)
   if (el != null) clickControl(el)
 });

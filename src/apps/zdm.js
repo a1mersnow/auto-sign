@@ -1,7 +1,7 @@
 import {findAndClickIt, clickControl, backward, getNumberFromSelector, output, MAX, sibling, scrollU, scrollD, nextSibling, log, handleDualCase} from '../util';
 import {createApp} from '../app';
 
-let app = createApp('张大妈', 'com.smzdm.client.android', () => text('首页').exists() && text('我的').exists(), undefined, undefined, () => {
+let app = createApp('张大妈', 'com.smzdm.client.android', () => text('首页').exists() && text('我的').exists(), undefined, () => {
   let el = idEndsWith('_close').findOne(MAX)
   if (el) clickControl(el)
   let el2 = idEndsWith('_cancel').findOne(MAX)

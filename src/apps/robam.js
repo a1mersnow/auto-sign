@@ -3,7 +3,7 @@ import {createApp} from '../app';
 
 let app = createApp('老板微信', 'com.tencent.mm', () => {
   return className('android.widget.TextView').text('微信').exists() && className('android.widget.TextView').text('通讯录').exists();
-}, undefined, false);
+}, undefined);
 app.add('点击通讯录', (next) => {
   findAndClickIt(text('通讯录'));
   next();

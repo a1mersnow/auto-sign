@@ -10,6 +10,7 @@ import zsApp2 from './apps/zs-app2';
 import zsApp from './apps/zs-app';
 import robam from './apps/robam'
 import ysf from './apps/ysf'
+import oppo from './apps/oppo'
 import { log, warn, closeLog } from './util.js';
 
 main()
@@ -83,13 +84,14 @@ function oldProcess () {
     [zsApp, 'zsApp'],
     [robam, 'robam'],
     [ysf, 'ysf'],
+    [oppo, 'oppo'],
   ]
 
   // 用户是否设置过模块
   let st = storages.create('pick');
   if (!isValidStore()) {
     // select of user
-    let sofu = dialogs.multiChoice('请选择所需模块（如需重新选择，请执行clear脚本）：', ['招行答题', '一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招行支付宝', '招商银行', '掌上生活', '微信老板电器', '云闪付'], getDefaultOptions())
+    let sofu = dialogs.multiChoice('请选择所需模块（如需重新选择，请执行clear脚本）：', ['招行答题', '一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招行支付宝', '招商银行', '掌上生活', '微信老板电器', '云闪付', 'OPPO'], getDefaultOptions())
     if (sofu.length === 0) {
       toast('请至少选择一个模块')
     } else {

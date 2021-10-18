@@ -5,7 +5,7 @@ import {error, warn} from './util'
 
 /**
  *
- * @param {import('./app').Application[]} apps
+ * @param {({run: Function})[]} apps
  */
 function main(apps) {
   // 等用户打开无障碍
@@ -70,18 +70,19 @@ function main(apps) {
     }
 
   } catch (e) {
-    error('[TOP ERROR]' + e.message);
+    if (e instanceof Error) {
+      error('[TOP ERROR]' + e.message);
+    }
   }
   engines.stopAll(); // to stop all listers
 }
 
 
 /**
- * @template {import('./app').Application} T
- * @param {T[]} arr
+ * @param {({run: Function})[]} arr
  * @returns {{run: Function}}
  */
-function createChain(arr) {
+export function createChain(arr) {
   return {
     run () {
       for (let i = 0; i < arr.length; i++) {

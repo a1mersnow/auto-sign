@@ -31,7 +31,7 @@ app.add('点击我的', (next) => {
   }
   next();
 }).add('点击双签', (next) => {
-  click(50, device.height * 0.6);
+  click(50, device.width * 1.333);
   next();
 }).add('点击立即领取', (next) => {
   let el = text('立即领取').findOne(MAX);

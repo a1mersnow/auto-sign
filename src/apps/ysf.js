@@ -3,7 +3,7 @@ import {createApp} from '../app';
 
 let app = createApp('云闪付', 'com.unionpay', () => {
   return text('首页').exists() && text('我的').exists();
-}, undefined, false, () => {
+}, undefined, () => {
   let el = text('稍候再说').findOne(MAX)
   if (el) {
     clickControl(el, true)

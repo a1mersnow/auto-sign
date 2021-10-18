@@ -18,13 +18,11 @@ let firstRoundFlag = false
  * @param {string} packageName
  * @param {(() => boolean) | string} homePageCondition
  * @param {(() => boolean) | void} quitCondition
- * @param {boolean | void} clickCenter
  * @param {(() => any) | void} closePopup
  * @param {(() => any) | void} goThruGuide
  * @returns {Application}
  */
-function createApp(appName, packageName, homePageCondition, quitCondition, clickCenter, closePopup, goThruGuide) {
-  if (typeof clickCenter === 'undefined') clickCenter = true;
+function createApp(appName, packageName, homePageCondition, quitCondition, closePopup, goThruGuide) {
   /** @type {[string, Function][]} */
   let steps = [];
   let index = 0;
@@ -32,13 +30,15 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
   function init() {
     try {
       log('【' + appName + '】初始化...')
-      launchPackage(packageName, homePageCondition, quitCondition, /** @type {boolean} */(clickCenter), closePopup, goThruGuide);
+      launchPackage(packageName, homePageCondition, quitCondition, closePopup, goThruGuide);
       backToHome(homePageCondition);
       log('【' + appName + '】初始化成功');
       return 'goon';
     } catch (e) {
-      if (e.message === 'app启动失败') return 'skip'
-      error('【' + appName + '】初始化失败：' + e.message);
+      if (e instanceof Error) {
+        error('【' + appName + '】初始化失败：' + e.message);
+        if (e.message === 'app启动失败') return 'skip'
+      }
       return 'retry';
     }
   }
@@ -90,8 +90,10 @@ function createApp(appName, packageName, homePageCondition, quitCondition, click
           }
         );
       } catch (e) {
+        if (e instanceof Error) {
+          error('【' + appName + '】' + steps[index - 1][0] + ' 失败' + (e.message ? '：' + e.message : ''));
+        }
         if (isFirstRound() && app) failedTasks.push(app);
-        error('【' + appName + '】' + steps[index - 1][0] + ' 失败' + (e.message ? '：' + e.message : ''));
         clear();
       }
     } else {
