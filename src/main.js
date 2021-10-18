@@ -71,7 +71,7 @@ function main () {
 
 function oldProcess () {
   // 所有模块
-  /** @type {[import('./app').Application, string][]} */
+  /** @type {[{run: Function}, string][]} */
   let all = [
     [zsQ, 'zsQ'],
     [oneplus, 'oneplus'],
