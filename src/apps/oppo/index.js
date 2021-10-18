@@ -3,7 +3,6 @@ import browser from './browser'
 import community from './community'
 import wallet from './wallet'
 import themeStore from './theme-store'
-import market from './market'
 import mine from './mine'
 import appStore from './app-store'
 import gameCenter from './game-center'
@@ -18,7 +17,6 @@ export default createChain([
   community,
   wallet,
   themeStore,
-  market,
   mine,
   appStore,
   gameCenter,
