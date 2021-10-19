@@ -3,7 +3,12 @@ import {createApp} from '../app';
 
 let app = createApp('OPPO商城', 'com.oppo.store', () => {
   return text('首页').exists() && text('我的').exists();
-}, undefined);
+}, undefined, () => {
+  let close = idEndsWith('close').findOne(1000);
+  if (close) {
+    clickControl(close)
+  }
+});
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'))
   next()
