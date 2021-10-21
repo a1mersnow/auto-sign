@@ -45,7 +45,7 @@ app.add('点击我的', (next) => {
   scrollDown()
   sleep(1000)
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 12; i++) {
     log('浏览次数：' + (i + 1))
     let list = idEndsWith('content_list').findOne(MAX)
     if (!list) throw new Error('content list not found')
@@ -62,15 +62,31 @@ app.add('点击我的', (next) => {
     }
     sleep(1000)
     if (i % 4 === 3) {
-      scrollU(500)
+      scrollU(500, undefined, 1000)
       sleep(1000)
+      scrollU(500, undefined, 1000)
+      sleep(1000)
+      scrollU(500, undefined, 1000)
+      sleep(1000)
+      scrollU(500, undefined, 1000)
+      sleep(1000)
+      scrollU(500, undefined, 1000)
+      sleep(1000)
+      scrollU(500, undefined, 1000)
     }
   }
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     scrollD(500)
     sleep(300)
   }
+
+  scrollUp()
+  sleep(1000)
+  scrollUp()
+  sleep(1000)
+  scrollUp()
+  sleep(1000)
 
   re_enter()
 
@@ -102,14 +118,19 @@ app.add('点击我的', (next) => {
     if (process) {
       let t = process.text();
       let count = +t.split('/')[0];
+      let total = +t.split('/')[1];
+      let remain = total - count;
+
+      log('剩余' + remain + '次');
 
       let btn = sibling(el, 4)
-      if (btn && btn.text() !== '已完成') {
+      let btnText = btn ? btn.text() : '';
+      if (btn && btnText !== '已完成') {
         clickControl(btn)
-        if (btn.text() === '领取') return next()
+        if (btnText === '领取') return next()
         sleep(2000)
-        for (let i = 0; i < count; i++) {
-          click(device.width / 4, device.height / 3 *2)
+        for (let i = 0; i < remain; i++) {
+          click(device.width / 4, device.height / 3 * 2)
           sleep(1000)
           let share = idEndsWith('btn_share_referer').findOne(MAX)
           if (share) {

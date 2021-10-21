@@ -314,7 +314,7 @@ var w = floaty.rawWindow(
   </vertical>`
 );
 // @ts-ignore
-var logHeight = 760
+var logHeight = 900
 w.setSize(device.width, logHeight);
 w.setTouchable(false);
 w.setPosition(0, device.height - logHeight);
