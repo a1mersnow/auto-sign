@@ -8,6 +8,10 @@ let app = createApp('OPPO商城', 'com.oppo.store', () => {
   if (close) {
     clickControl(close)
   }
+  let close2 = idEndsWith('dialog_delete').findOnce()
+  if (close2) {
+    clickControl(close2)
+  }
 });
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'))
