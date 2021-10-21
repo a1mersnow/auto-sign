@@ -40,7 +40,7 @@ app.add('点击我的', (next) => {
     next('查看京豆数量');
   } else {
     backward();
-    click(50, device.height * 0.6);
+    click(150, device.width * 1.333);
     next();
   }
 }).add('点击`完成双签领取`', (next) => {
@@ -61,7 +61,7 @@ app.add('点击我的', (next) => {
   }
   combo();
   backward();
-  click(50, device.height * 0.6)
+  click(150, device.width * 1.333);
   combo();
   next();
 }).add('查看京豆数量', (next, tools) => {

@@ -39,10 +39,12 @@ app.add('点击我的', (next) => {
   backward()
 
   scrollU(500)
-  sleep(300)
+  sleep(1000)
   scrollU(500)
-  sleep(300)
+  sleep(1000)
   scrollU(500)
+  sleep(1000)
+  scrollU(300)
 
   for (let i = 0; i < 10; i++) {
     log('浏览次数：' + (i + 1))

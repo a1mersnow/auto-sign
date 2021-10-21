@@ -31,7 +31,7 @@ app.add('点击通讯录', (next) => {
   findAndClickIt(className('android.widget.TextView').textMatches(/.*会员中心.*/));
   next();
 }).add('点击签到有礼', (next) => {
-  sleep(5000)
+  sleep(8000)
   scrollU(500)
   sleep(1000)
   let capture = images.captureScreen()
