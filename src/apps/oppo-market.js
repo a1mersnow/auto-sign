@@ -38,13 +38,12 @@ app.add('点击我的', (next) => {
 }).add('浏览商品', (next) => {
   backward()
 
-  scrollU(500)
+  scrollDown()
   sleep(1000)
-  scrollU(500)
+  scrollDown()
   sleep(1000)
-  scrollU(500)
+  scrollDown()
   sleep(1000)
-  scrollU(300)
 
   for (let i = 0; i < 10; i++) {
     log('浏览次数：' + (i + 1))
