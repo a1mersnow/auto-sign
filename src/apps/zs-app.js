@@ -53,7 +53,7 @@ app.add('关闭升级提示', next => {
     next();
   }
 }).add('判断有没有指纹', (next) => {
-  if (text('忘记手势密码').exists()) {
+  if (text('忘记手势密码').exists() || text('更多').exists()) {
     next('输入图案密码');
   } else {
     next();
