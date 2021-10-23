@@ -18,22 +18,22 @@ let app = createApp('掌上生活App', 'com.cmbchina.ccd.pluto.cmbActivity', () 
   }
 });
 app.add('关闭升级提示', next => {
-  const el = text('暂不体验').findOne(MAX)
+  const el = text('暂不体验').findOne(1000)
   if (el) clickControl(el, true)
   next()
 }).add('关闭可能的弹窗', next => {
-  const el = idEndsWith('_close').findOne(MAX)
+  const el = idEndsWith('_close').findOne(1000)
   if (el) clickControl(el)
   next()
 }).add('点击我的', (next) => {
   findAndClickIt(text('我的'));
   next();
 }).add('关闭升级提示', next => {
-  const el = text('暂不体验').findOne(MAX)
+  const el = text('暂不体验').findOne(1000)
   if (el) clickControl(el, true)
   next()
 }).add('关闭可能的弹窗', next => {
-  const el = idEndsWith('_close').findOne(MAX)
+  const el = idEndsWith('_close').findOne(1000)
   if (el) clickControl(el)
   next()
 }).add('点击签到按钮', (next) => {
@@ -65,14 +65,16 @@ app.add('关闭升级提示', next => {
 }).add('输入图案密码', (next) => {
   let password = storages.create('password').get('password');
   if (!password) throw new Error('未曾输入过密码');
-  let welcom = className('android.widget.TextView').text('欢迎回来').findOne(MAX);
-  if (welcom == null) throw new Error('A');
-  let p = welcom.parent();
-  if (p == null) throw new Error('B');
-  let c = sibling(p, 4);
-  if (c == null) throw new Error('C');
-  let t = c.child(0);
-  if (t == null) throw new Error('D');
+  let t = className('android.view.View').depth(8).findOnce();
+  if (!t) {
+    let all = className('android.view.View').depth(7).find();
+    if (all.length) {
+      t = all[1]
+    }
+  }
+
+  if (!t) throw new Error('no input area')
+
   inputPassword(t, password);
   next();
 }).add('点击签到按钮', (next) => {
