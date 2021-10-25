@@ -123,7 +123,7 @@ app.add('点击我的', (next) => {
       let t = process.text();
       let count = +t.split('/')[0];
       let total = +t.split('/')[1];
-      let remain = total - count;
+      let remain = total - count + 2;
 
       log('剩余' + remain + '次');
 
