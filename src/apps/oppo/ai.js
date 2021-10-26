@@ -3,7 +3,12 @@ import {createApp} from '../../app';
 
 let app = createApp('OPPO智能家居', 'com.heytap.smarthome', () => {
   return text('首页').exists() && text('我的').exists();
-}, undefined);
+}, undefined, () => {
+  let close = idEndsWith('dialog_clos_image').findOnce();
+  if (close) {
+    clickControl(close)
+  }
+});
 app.add('点击我的', (next) => {
   findAndClickIt(text('我的'))
   next()
