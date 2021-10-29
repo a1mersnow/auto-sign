@@ -28,9 +28,9 @@ app.add('点击我的', (next) => {
   }
   next()
 }).add('点击立即签到', (next) => {
-  let el = text('立即签到').findOne(MAX)
+  let el = textContains('立即签到').findOne(MAX)
   if (el) {
-    clickControl(el)
+    clickControl(el, true)
     sleep(1000)
     let close = idEndsWith('close').findOnce()
     if (close) {
@@ -98,7 +98,7 @@ app.add('点击我的', (next) => {
   if (el) {
     let p = el.parent()
     if (p) {
-      let btn = p.findOne(text('领取'))
+      let btn = p.findOne(textContains('领取'))
       if (btn) {
         clickControl(btn)
         sleep(1000)
@@ -118,22 +118,24 @@ app.add('点击我的', (next) => {
 }).add('分享商品', (next) => {
   let el = text('分享商品到微信').findOne(MAX)
   if (el) {
-    let process = sibling(el, 3)
+    // @ts-ignore
+    let process = el.parent().findOne(textContains('/'));
     if (process) {
       let t = process.text();
       let count = +t.split('/')[0];
       let total = +t.split('/')[1];
-      let remain = total - count + 2;
+      let remain = total - count;
 
       log('剩余' + remain + '次');
 
-      let btn = sibling(el, 4)
+      // @ts-ignore
+      let btn = el.parent().findOne(className('android.widget.Button'))
       let btnText = btn ? btn.text() : '';
-      if (btn && btnText !== '已完成') {
+      if (btn && btnText.indexOf('已完成') === -1) {
         clickControl(btn)
-        if (btnText === '领取') return next()
+        if (btnText.indexOf('领取') !== -1) return next()
         sleep(2000)
-        for (let i = 0; i < remain; i++) {
+        for (let i = 0; i < remain + 2; i++) {
           click(device.width / 4, device.height / 3 * 2)
           sleep(1000)
           let share = idEndsWith('btn_share_referer').findOne(MAX)
