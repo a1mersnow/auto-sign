@@ -10,7 +10,7 @@ let app = createApp('OPPO商城', 'com.oppo.store', () => {
   }
   let close2 = idEndsWith('dialog_delete').findOnce()
   if (close2) {
-    clickControl(close2)
+    clickControl(close2, true)
   }
 });
 app.add('点击我的', (next) => {
