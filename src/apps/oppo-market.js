@@ -155,7 +155,7 @@ app.add('点击我的', (next) => {
         if (el) {
           let p = el.parent();
           if (p) {
-            let btn = p.findOne(text('领取'));
+            let btn = p.findOne(textContains('领取'));
             if (btn) {
               clickControl(btn)
             }
