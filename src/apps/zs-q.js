@@ -43,7 +43,7 @@ app.add('点击发现', (next) => {
     }
   }
   next()
-}).add('获取掌上生活每日答题的答案', (next) => {
+})/* .add('获取掌上生活每日答题的答案', (next) => {
   let tab = text('掌上答案').findOne(MAX);
   if (tab == null) throw new Error('掌上生活tab未找到')
   clickControl(tab);
@@ -65,6 +65,6 @@ app.add('点击发现', (next) => {
     }
   }
   next()
-});
+}); */
 
 export default app;
