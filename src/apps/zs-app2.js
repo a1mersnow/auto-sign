@@ -1,7 +1,7 @@
 import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling, log} from '../util';
 import {createApp} from '../app';
 
-let app = createApp('招商银行App', 'cmb.pb', () => text('首页').exists && text('理财').exists() && text('我的').exists());
+let app = createApp('招商银行App', 'cmb.pb', () => text('首页').exists && text('我的').exists());
 app.add('点击我的', (next) => {
   findAndClickIt(className('android.widget.TextView').text('我的'));
   next();
