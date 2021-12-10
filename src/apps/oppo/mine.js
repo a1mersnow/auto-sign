@@ -8,7 +8,7 @@ app.add('点击首页', (next) => {
   findAndClickIt(text('首页'))
   next()
 }).add('点击签到', (next) => {
-  let el = text('签到').findOne(MAX)
+  let el = textContains('签到').findOne(MAX)
   if (el) {
     clickControl(el)
     findAndClickIt(idEndsWith('close'))

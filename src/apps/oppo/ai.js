@@ -13,7 +13,7 @@ app.add('点击我的', (next) => {
   findAndClickIt(text('我的'))
   next()
 }).add('点击签到', (next) => {
-  let el = text('签到').findOne(MAX)
+  let el = textContains('签到').findOne(MAX)
   if (el) {
     clickControl(el)
     findAndClickIt(idEndsWith('close'))
