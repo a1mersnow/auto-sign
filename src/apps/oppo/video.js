@@ -13,12 +13,16 @@ app.add('点击我的', (next) => {
     clickControl(el)
   }
   next()
-}).add('点击签到', (next) => {
+}).add('点击签到第二层入口', (next) => {
   let el = textContains('去签到').findOne(MAX)
   if (el) {
     clickControl(el)
-    findAndClickIt(idEndsWith('close'))
-    sleep(2000)
+  }
+  next()
+}).add('点击签到', (next) => {
+  let el = text('签到').findOne(MAX)
+  if (el) {
+    clickControl(el)
   }
   next()
 })
