@@ -17,6 +17,12 @@ app.add('点击我的', (next) => {
   let el = text('签到').findOne(MAX)
   if (el) {
     clickControl(el)
+    sleep(1500)
+    let close = idEndsWith('close').findOnce()
+    if (close) {
+      clickControl(close)
+      sleep(1000)
+    }
   }
   next()
 })
