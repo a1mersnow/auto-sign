@@ -31,17 +31,8 @@ app.add('点击通讯录', (next) => {
   findAndClickIt(className('android.widget.TextView').textMatches(/.*会员中心.*/));
   next();
 }).add('点击签到有礼', (next) => {
-  sleep(8000)
-  scrollU(500)
-  sleep(1000)
-  let capture = images.captureScreen()
-  let point = images.findColorEquals(capture, '#59bdf1', 0, 0, device.width, device.height)
-  if (!point) throw new Error('found first point fail')
-  let point2 = images.findColorEquals(capture, '#0376c7', 0, point.y, device.width, device.height - point.y)
-  if (!point2) throw new Error('found second point fail')
-  click(point2.x, point2.y)
-  sleep(1000)
-  next();
+  findAndClickIt(text('签到有礼'));
+  next()
 }).add('点击签到按钮', (next) => {
   click(device.width / 2, 450)
   click(device.width / 2, 475)

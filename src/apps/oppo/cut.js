@@ -1,7 +1,7 @@
 import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling, scrollU} from '../../util';
 import {createApp} from '../../app';
 
-let app = createApp('OPPO即录', 'com.coloros.videoeditor', () => {
+let app = createApp('OPPO即录', 'com.oplus.videoeditor', () => {
   return text('创作').exists() && text('我的').exists();
 }, undefined);
 app.add('点击我的', (next) => {

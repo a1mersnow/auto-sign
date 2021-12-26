@@ -1,7 +1,7 @@
 import {findAndClickIt, clickControl, backward, getNumberFromSelector, MAX, sibling, scrollU} from '../../util';
 import {createApp} from '../../app';
 
-let app = createApp('我的OPPO', 'com.oppo.usercenter', () => {
+let app = createApp('我的OPPO', 'com.oplus.vip', () => {
   return text('首页').exists() && text('我的').exists();
 }, undefined);
 app.add('点击首页', (next) => {
