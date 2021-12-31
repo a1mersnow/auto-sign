@@ -5,7 +5,6 @@ import jdjr from './apps/jdjr';
 import jdmall from './apps/jdmall';
 import zdm from './apps/zdm';
 import zsWx from './apps/zs-wx';
-import zsZfb from './apps/zs-zfb';
 import zsApp2 from './apps/zs-app2';
 import zsApp from './apps/zs-app';
 import robam from './apps/robam'
@@ -80,7 +79,6 @@ function oldProcess () {
     [jdmall, 'jdmall'],
     [zdm, 'zdm'],
     [zsWx, 'zsWx'],
-    [zsZfb, 'zsZfb'],
     [zsApp2, 'zsApp2'],
     [zsApp, 'zsApp'],
     [robam, 'robam'],
@@ -93,7 +91,7 @@ function oldProcess () {
   let st = storages.create('pick');
   if (!isValidStore()) {
     // select of user
-    let sofu = dialogs.multiChoice('请选择所需模块（如需重新选择，请执行clear脚本）：', ['招行答题', '一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招行支付宝', '招商银行', '掌上生活', '微信老板电器', '云闪付', '欢太商城', 'OPPO'], getDefaultOptions())
+    let sofu = dialogs.multiChoice('请选择所需模块（如需重新选择，请执行clear脚本）：', ['招行答题', '一加社区', '京东金融', '京东商城', '什么值得买', '招行微信', '招商银行', '掌上生活', '微信老板电器', '云闪付', '欢太商城', 'OPPO'], getDefaultOptions())
     if (sofu.length === 0) {
       toast('请至少选择一个模块')
     } else {
